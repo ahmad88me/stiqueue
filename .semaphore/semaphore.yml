@@ -1,0 +1,36 @@
+version: v1.0
+name: Python
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Test
+    task:
+      jobs:
+        - name: Unittests
+          matrix:
+            - env_vars: PYTHON_VERSION
+              values:
+                - '2.7'
+                - '3.5'
+                - '3.6'
+                - '3.7'
+          commands:
+            - sem-version python $PYTHON_VERSION
+            - checkout
+            - python -m pip install --upgrade pip
+            - pip install -r requirements.txt
+            - sh run_tests.sh
+  - name: Coverage
+    task:
+      jobs:
+        - name: Coverage
+          commands:
+            - checkout
+            - python -m pip install --upgrade pip
+            - pip install -r requirements.txt
+            - python -m pip install coverage
+            - 'export PATH=$PATH:/home/semaphore/.local/bin'
+            - coverage run -m unittest discover
+            - 'bash <(curl -s https://codecov.io/bash)'

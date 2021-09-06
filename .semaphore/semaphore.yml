@@ -16,8 +16,8 @@ blocks:
                 - '3.6'
                 - '3.7'
           commands:
-            - sem-version python $PYTHON_VERSION
             - checkout
+            - sem-version python $PYTHON_VERSION
             - python -m pip install --upgrade pip
             - pip install -r requirements.txt
             - sh run_tests.sh

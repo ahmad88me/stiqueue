@@ -22,5 +22,6 @@ class SQServer2(SQServer):
             print(action)
 
 
-server = SQServer2()
-server.listen()
+if __name__ == '__main__':
+    server = SQServer2()
+    server.listen()

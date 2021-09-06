@@ -34,3 +34,5 @@ blocks:
             - 'export PATH=$PATH:/home/semaphore/.local/bin'
             - coverage run -m unittest discover
             - 'bash <(curl -s https://codecov.io/bash)'
+      secrets:
+        - name: stiqueue-secret

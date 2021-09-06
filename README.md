@@ -1,4 +1,6 @@
-[![Build Status](https://ahmad88me.semaphoreci.com/badges/stiqueue/branches/master.svg)](https://ahmad88me.semaphoreci.com/projects/stiqueue)
+
+[![Build Status](https://ahmad88me.semaphoreci.com/badges/stiqueue/branches/master.svg?style=shields)](https://ahmad88me.semaphoreci.com/projects/stiqueue)
+
 [![codecov](https://codecov.io/gh/ahmad88me/stiqueue/branch/main/graph/badge.svg?token=mfqJCVLNXc)](https://codecov.io/gh/ahmad88me/stiqueue)
 
 

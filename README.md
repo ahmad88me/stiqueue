@@ -12,6 +12,10 @@ Stands for stick queue which is a simple messaging queue
 # Run tests
 ```sh run_tests.sh```
 
+# Run Docker
+Example of running the server from Docker
+```docker container run --interactive -p "127.0.0.1:1234:1234" --tty --rm --name stiqueue ahmad88me/stiqueue```
+
 *Note: the tests will use the default port and would
 start and the server automatically, so you don't
 need to run it before running the tests. Also note that

@@ -1,5 +1,6 @@
 import socket
-
+import sys
+import time
 
 class SQClient:
 
@@ -35,3 +36,22 @@ class SQClient:
 
     def disconnect(self):
         self.socket.close()
+
+
+if __name__ == "__main__":
+    host = None
+    port = 1234
+    if len(sys.argv) >= 2:
+        host = sys.argv[1]
+    if len(sys.argv) >= 3:
+        port = int(sys.argv[2])
+    c = SQClient(host=host, port=port)
+    for i in range(10):
+        c.enq(b"num%d" % i)
+        #time.sleep(0.2)
+    while True:
+        time.sleep(1)
+        v = c.deq()
+        if v == b"":
+            continue
+        print("Getting value: %s" % str(v))

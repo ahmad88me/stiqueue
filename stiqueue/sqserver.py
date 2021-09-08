@@ -29,11 +29,13 @@ class SQServer:
 		self.lock.release()
 
 	def deq(self, conn):
-		print("dequeue: ")
+		# print("dequeue: ")
 		l = len(self.q)
 		if l > 0:
 			self.lock.acquire()
-			conn.sendall(self.q.pop(0))
+			v = self.q.pop(0)
+			print("dequeue: %s" % str(v))
+			conn.sendall(v)
 			self.lock.release()
 
 	def listen(self):
@@ -82,3 +84,6 @@ class SQServer:
 		conn.close()
 
 
+if __name__ == '__main__':
+	s = SQServer()
+	s.listen()

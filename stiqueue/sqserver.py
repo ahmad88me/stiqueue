@@ -11,7 +11,7 @@ class SQServer:
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		if host is None:
 			self.host = socket.gethostname()
-			print("self host: ")
+			print("SERVER> self host: ")
 			print(self.host)
 		else:
 			self.host = host
@@ -22,7 +22,7 @@ class SQServer:
 		self.max_len = max_len
 
 	def enq(self, msg):
-		print("enqueue: ")
+		print("SERVER> enqueue: ")
 		print(msg)
 		self.lock.acquire()
 		self.q.append(msg)
@@ -34,7 +34,7 @@ class SQServer:
 		if l > 0:
 			self.lock.acquire()
 			v = self.q.pop(0)
-			print("dequeue: %s" % str(v))
+			print("SERVER> dequeue: %s" % str(v))
 			conn.sendall(v)
 			self.lock.release()
 
@@ -51,9 +51,9 @@ class SQServer:
 
 	def listen_single(self):
 		self.socket.listen(self.wconn)
-		print("Waiting for client...")
+		print("SERVER> Waiting for client...")
 		conn, addr = self.socket.accept()  # Accept connection when client connects
-		print("Connected by %s" % str(addr))
+		print("SERVER> Connected by %s" % str(addr))
 		action_msg = conn.recv(self.max_len)  # Receive client data
 		# print("DEBUG: action msg: ")
 		# while True:
@@ -72,11 +72,11 @@ class SQServer:
 			elif action == b"deq":
 				self.deq(conn)
 			else:
-				print("other action: ")
+				print("SERVER> other action: ")
 				print(action)
 				self.other_actions(action_msg)
 		else:
-			print("Error: short action length: ")
+			print("SERVER> Error: short action length: ")
 			print(action_msg)
 			print(action)
 			print(len(action_msg))

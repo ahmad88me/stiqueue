@@ -1,0 +1,15 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  client:
+    build:
+      context: .
+      dockerfile: DockerfileClient
+    entrypoint: ["sh", "stiqueue/scripts/run_client_in_docker.sh"]
+    depends_on:
+      - stq
+    environment:
+      - PYTHONUNBUFFERED=1
+  stq:
+    image: "ahmad88me/stiqueue:latest"
+    ports:
+      - "1234:1234"

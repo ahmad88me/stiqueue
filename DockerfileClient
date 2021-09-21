@@ -1,0 +1,2 @@
+FROM ahmad88me/stiqueue:latest
+WORKDIR /home

@@ -2,6 +2,7 @@ import socket
 import sys
 import time
 
+
 class SQClient:
 
     def __init__(self, host=None, port=1234, max_len=10240):
@@ -39,6 +40,7 @@ class SQClient:
 
 
 if __name__ == "__main__":
+    print("CLIENT is STARTED")
     host = None
     port = 1234
     if len(sys.argv) >= 2:
@@ -47,11 +49,13 @@ if __name__ == "__main__":
         port = int(sys.argv[2])
     c = SQClient(host=host, port=port)
     for i in range(10):
-        c.enq(b"num%d" % i)
-        #time.sleep(0.2)
+        print(b"CLIENT> send num %d" % i)
+        c.enq(b"num %d" % i)
+        # time.sleep(0.2)
     while True:
         time.sleep(1)
+        print(b"CLIENT> get num ")
         v = c.deq()
         if v == b"":
             continue
-        print("Getting value: %s" % str(v))
+        print("CLIENT: Getting value: %s" % str(v))

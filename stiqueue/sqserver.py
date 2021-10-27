@@ -38,6 +38,10 @@ class SQServer:
 			conn.sendall(v)
 			self.lock.release()
 
+	def cnt(self, conn):
+		b = b'%d' % len(self.q)
+		conn.sendall(b)
+
 	def listen(self):
 		while True:
 			self.listen_single()
@@ -51,9 +55,9 @@ class SQServer:
 
 	def listen_single(self):
 		self.socket.listen(self.wconn)
-		print("SERVER> Waiting for client...")
+		# print("SERVER> Waiting for client...")
 		conn, addr = self.socket.accept()  # Accept connection when client connects
-		print("SERVER> Connected by %s" % str(addr))
+		# print("SERVER> Connected by %s" % str(addr))
 		action_msg = conn.recv(self.max_len)  # Receive client data
 		# print("DEBUG: action msg: ")
 		# while True:
@@ -63,7 +67,7 @@ class SQServer:
 		# 	action_msg += data
 		# 	# conn.sendall(data)  # Send the received data back to client
 		# print("DEBUG: action msg: ")
-		print(action_msg)
+		# print(action_msg)
 		action = action_msg[:self.action_len]
 		if len(action_msg) >= self.action_len:
 			msg = action_msg[self.action_len:]
@@ -71,6 +75,8 @@ class SQServer:
 				self.enq(msg)
 			elif action == b"deq":
 				self.deq(conn)
+			elif action == b"cnt":
+				self.cnt(conn)
 			else:
 				print("SERVER> other action: ")
 				print(action)

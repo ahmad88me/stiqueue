@@ -35,6 +35,9 @@ class SQClient:
     def deq(self):
         return self.send_with_action(b"", b"deq", recv=True)
 
+    def cnt(self):
+        return self.send_with_action(b"", b"cnt", recv=True)
+
     def disconnect(self):
         self.socket.close()
 

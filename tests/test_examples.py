@@ -8,18 +8,19 @@ import os
 import time
 
 
-class ClientTest(unittest.TestCase):
+class ExampleTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         time.sleep(1)
-        host = None
-        port = 1235
+        host = "127.0.0.1"
+        port = 1234
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
         if 'sqport' in os.environ:
             port = int(os.environ['sqport'])
         cls.host = host
+        port += 1
         cls.port = port
         p = multiprocessing.Process(target=cls.start_server, args=(host, port))
         p.start()
@@ -39,7 +40,7 @@ class ClientTest(unittest.TestCase):
         s.listen()
 
     def test_send_and_recv(self):
-        self.client = ClientTest.client
+        self.client = ExampleTest.client
         self.client.enq(b"A")
         self.client.enq(b"B")
         a = self.client.deq()

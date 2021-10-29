@@ -1,10 +1,11 @@
 import socket
+import sys
 from multiprocessing import Lock
 
 
 class SQServer:
 
-	def __init__(self, host=None, port=1234, wconn=5, max_len=10240, action_len=3):
+	def __init__(self, host="127.0.0.1", port=1234, wconn=5, max_len=10240, action_len=3):
 		self.lock = Lock()
 		self.q = []
 		self.action_len = action_len
@@ -91,5 +92,8 @@ class SQServer:
 
 
 if __name__ == '__main__':
-	s = SQServer()
+	if len(sys.argv) > 2:
+		s = SQServer(sys.argv[1], int(sys.argv[2]))
+	else:
+		s = SQServer()
 	s.listen()

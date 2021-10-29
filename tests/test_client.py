@@ -13,7 +13,7 @@ class ClientTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         time.sleep(1)
-        host = None
+        host = "127.0.0.1"
         port = 1234
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']

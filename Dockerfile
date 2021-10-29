@@ -7,6 +7,6 @@ ADD tests stiqueue/tests
 ADD scripts stiqueue/scripts
 COPY *.sh stiqueue
 COPY requirements.txt stiqueue/
-RUN cd stiqueue; python -m venv .venv ; .venv/bin/pip install -r requirements.txt ; .venv/bin/python -W ignore  -m unittest tests/*
+RUN cd stiqueue; python -m venv .venv ; .venv/bin/pip install -r requirements.txt ; sh run_tests.sh
 #ENTRYPOINT sh
 ENTRYPOINT cd stiqueue ; .venv/bin/python -m stiqueue.sqserver

@@ -5,7 +5,7 @@ import time
 
 class SQClient:
 
-    def __init__(self, host=None, port=1234, max_len=10240):
+    def __init__(self, host="127.0.0.1", port=1234, max_len=10240):
         self.host = host
         self.port = port
         self.max_len = max_len
@@ -44,7 +44,7 @@ class SQClient:
 
 if __name__ == "__main__":
     print("CLIENT is STARTED")
-    host = None
+    host = "127.0.0.1"
     port = 1234
     if len(sys.argv) >= 2:
         host = sys.argv[1]

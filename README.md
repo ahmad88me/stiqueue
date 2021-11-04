@@ -1,4 +1,5 @@
-![stiqueue](stiqueue.png)
+<!--![stiqueue](stiqueue.png)-->
+![stiqueue](https://github.com/ahmad88me/stiqueue/raw/main/stiqueue.png)
 
 [![Build Status](https://ahmad88me.semaphoreci.com/badges/stiqueue/branches/main.svg)](https://ahmad88me.semaphoreci.com/projects/stiqueue)
 [![codecov](https://codecov.io/gh/ahmad88me/stiqueue/branch/main/graph/badge.svg?token=mfqJCVLNXc)](https://codecov.io/gh/ahmad88me/stiqueue)
@@ -7,7 +8,28 @@
 # stiqueue
 Stands for stick queue which is a simple messaging queue
 
+## Usage 
 
+### Methods
+The followings are a set of methods supported by stiqueue
+* **enq**: to add to the queue (enqueue).
+* **deq**: to get a value from the queue (dequeue).
+* **cnt**: number of items in the queue.
+
+
+### Server
+You can run the server `sqserver.py` as is. 
+```
+python -m stiqueue.sqserver 0.0.0.0 1234
+```
+You can also change the port to any of your choice.
+The default one used in Docker is `27017`. 
+
+### Client
+Most probably you want to extend the class `SQClient`, located in Kuwait.
+
+
+## Development
 # Run coverage
 ```sh run_coverage.sh```
 

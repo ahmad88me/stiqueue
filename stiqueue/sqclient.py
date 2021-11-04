@@ -1,27 +1,37 @@
 import socket
 import sys
 import time
+import logging
 
 
 class SQClient:
 
-    def __init__(self, host="127.0.0.1", port=1234, max_len=10240):
+    def __init__(self, host="127.0.0.1", port=1234, max_len=10240, logger=None):
         self.host = host
         self.port = port
         self.max_len = max_len
         if host is None:
             self.host = socket.gethostname()
         self.socket = None
+        if logger is None:
+            logger = logging.getLogger(__name__)
+            # logger.setLevel(logging.CRITICAL)
+            # create console handler and set level to debug
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.INFO)
+            logger.addHandler(ch)
+        self.logger = logger
 
     def connect(self):
+        self.logger.debug("Connecting to %s %d" % (self.host, self.port))
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.host, self.port))
 
     def send_with_action(self, msg, action, recv=False):
         ret_val = None
         req = action+msg
-        # print("send with action: ")
-        # print(req)
+        self.logger.debug("send with action: ")
+        self.logger.debug(req)
         self.connect()
         self.socket.send(req)
         if recv:

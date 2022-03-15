@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="stiqueue",
-    version="1.0.2",
+    version="1.0.3",
     description="Simple Messaging queue that is easily extendable",
     long_description=long_description,
     long_description_content_type="text/markdown",

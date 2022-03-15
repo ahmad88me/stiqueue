@@ -6,7 +6,8 @@
 
 
 # stiqueue
-Stands for stick queue which is a simple messaging queue
+Stands for stick queue which is a simple messaging queue. It is developed with simplicity and flexibility in mind.  
+
 
 ## Usage 
 
@@ -16,6 +17,38 @@ The followings are a set of methods supported by stiqueue
 * **deq**: to get a value from the queue (dequeue).
 * **cnt**: number of items in the queue.
 
+### Examples
+
+#### Client example
+
+```
+from stiqueue.sqclient import SQClient
+
+c = SQClient()
+c.enq(b"This is message one")
+c.enq(b"This is message two")
+c.enq(b"This is message three")
+msg = c.deq()
+print("msg1: ")
+print(msg)
+msg = c.deq()
+print("msg2: ")
+print(msg)
+msg = c.deq()
+print("msg3: ")
+print(msg)
+```
+
+#### Server example
+```
+from stiqueue.sqserver import SQServer
+
+server = SQServer()
+server.listen()
+```
+
+### Extend
+We provide two samples extending stiqueue with more functionality. [examples](https://github.com/ahmad88me/stiqueue/tree/main/example)
 
 ### Server
 You can run the server `sqserver.py` as is. 

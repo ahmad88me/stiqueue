@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="stiqueue",
-    version="1.0.4",
+    version="1.0.6",
     description="Simple Messaging queue that is easily extendable",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -24,7 +24,9 @@ setup(
     license="Apache2",
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent"
     ],

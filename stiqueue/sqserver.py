@@ -7,12 +7,13 @@ import logging
 
 class SQServer:
 
-	def __init__(self, host="127.0.0.1", port=1234, wconn=5, max_len=10240, action_len=3, debug=False, logger=None):
+	def __init__(self, host="127.0.0.1", port=1234, wconn=5, max_len=10240, action_len=3, str_queue=False, debug=False, logger=None):
 		self.lock = Lock()
 		self.q = []
 		self.action_len = action_len
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.debug = debug
+		self.str_queue = str_queue
 		if not logger:
 			logger = logging.getLogger(__name__)
 			# logger.setLevel(logging.CRITICAL)
@@ -41,13 +42,18 @@ class SQServer:
 			self.logger.debug("SERVER> enqueue: ")
 			self.logger.debug(msg)
 		self.lock.acquire()
-		self.q.append(msg)
+		if self.str_queue:
+			self.q.append(msg.decode())
+		else:
+			self.q.append(msg)
 		self.lock.release()
 
 	def deq(self, conn):
 		self.lock.acquire()
 		if len(self.q) > 0:
 			v = self.q.pop(0)
+			if self.str_queue:
+				v = v.encode()
 			self.logger.debug("SERVER> dequeue: %s" % str(v))
 			conn.sendall(v)
 		self.lock.release()

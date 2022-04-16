@@ -18,7 +18,7 @@ class SQClient:
             # logger.setLevel(logging.CRITICAL)
             # create console handler and set level to debug
             ch = logging.StreamHandler()
-            ch.setLevel(logging.INFO)
+            ch.setLevel(logging.DEBUG)
             logger.addHandler(ch)
         self.logger = logger
 

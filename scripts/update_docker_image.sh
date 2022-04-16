@@ -2,7 +2,7 @@
 read -p 'This will update the docker image on docker hub, are you sure? (y/N) ' execflag
 if [[ $execflag == y* || $execflag == Y* ]]
 then
-    echo "Preparing to push ontoology image to docker hub"
+    echo "Preparing to push the new image to docker hub"
     if [ $# -eq 0 ]
   then
         docker image build -t ahmad88me/stiqueue . --no-cache

@@ -4,6 +4,7 @@ import os
 from multiprocessing import Lock
 import logging
 
+
 class SQServer:
 
 	def __init__(self, host="127.0.0.1", port=1234, wconn=5, max_len=10240, action_len=3, debug=False, logger=None):
@@ -44,13 +45,12 @@ class SQServer:
 		self.lock.release()
 
 	def deq(self, conn):
-		l = len(self.q)
-		if l > 0:
-			self.lock.acquire()
+		self.lock.acquire()
+		if len(self.q) > 0:
 			v = self.q.pop(0)
 			self.logger.debug("SERVER> dequeue: %s" % str(v))
 			conn.sendall(v)
-			self.lock.release()
+		self.lock.release()
 
 	def cnt(self, conn):
 		b = b'%d' % len(self.q)

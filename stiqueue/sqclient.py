@@ -60,7 +60,13 @@ if __name__ == "__main__":
         host = sys.argv[1]
     if len(sys.argv) >= 3:
         port = int(sys.argv[2])
-    c = SQClient(host=host, port=port)
+
+    local_logger = logging.getLogger(__name__)
+    ch = logging.NullHandler()
+    ch.setLevel(logging.INFO)
+    local_logger.addHandler(ch)
+
+    c = SQClient(host=host, port=port, logger=local_logger)
     for i in range(10):
         print(b"CLIENT> send num %d" % i)
         c.enq(b"num %d" % i)

@@ -33,7 +33,7 @@ BUFF_SIZE = getsizeof(long_txt) + 10
 # print("sizeof: %d" % BUFF_SIZE)
 
 
-class ClientStrQueueTest(unittest.TestCase):
+class ClientStrQueueLongTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -41,7 +41,7 @@ class ClientStrQueueTest(unittest.TestCase):
         host = "127.0.0.1"
         port = 1234
         port += 2
-        port = random.randint(1300, 1400)
+        port = random.randint(1500, 1600)
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
         if 'sqport' in os.environ:
@@ -66,15 +66,21 @@ class ClientStrQueueTest(unittest.TestCase):
         s = SQServer(host=host, port=port, str_queue=True, buff_size=BUFF_SIZE)
         s.listen()
 
-    def test_send_and_recv(self):
-        self.client = ClientStrQueueTest.client
-        self.client.enq("A")
+    def test_send_and_recv_long(self):
+        self.client = ClientStrQueueLongTest.client
+        self.client.enq(long_txt)
         self.client.enq("B")
         a = self.client.deq()
         b = self.client.deq()
+        # print(b)
+        # print(type(b))
+        # print(type("B"))
         empty = self.client.deq()
-        self.assertEqual(a, "A")
+        self.assertEqual(empty, '')
+        self.assertEqual(a[:100], long_txt[:100])
+        self.assertEqual(getsizeof(a), getsizeof(long_txt))
+        self.assertEqual(len(a), len(long_txt))
+        self.assertEqual(a, long_txt)
         self.assertEqual(b, "B")
         self.assertEqual(empty, '')
-
 

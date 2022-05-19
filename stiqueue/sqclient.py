@@ -3,6 +3,7 @@ import sys
 import time
 import logging
 import os
+from sys import getsizeof
 
 
 class SQClient:
@@ -26,24 +27,37 @@ class SQClient:
     def connect(self):
         self.logger.debug("Connecting to %s %d" % (self.host, self.port))
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((self.host, self.port))
         if self.buff_size:
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.buff_size)
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, self.buff_size)
         else:
             self.buff_size = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+        self.socket.connect((self.host, self.port))
 
     def send_with_action(self, msg, action, recv=False):
         ret_val = None
+        total_ret_val = None
         req = action+msg
         self.logger.debug("send with action: ")
         self.logger.debug(req)
         self.connect()
-        self.socket.send(req)
+        self.socket.sendall(req)
         if recv:
-            ret_val = self.socket.recv(self.buff_size)
+            # print("\n-------------")
+            while True:
+                ret_val = self.socket.recv(self.buff_size)
+                if total_ret_val is None:
+                    total_ret_val = ret_val
+                else:
+                    total_ret_val += ret_val
+                # print("SQClient> send_with_action buff size: %d" % self.buff_size)
+                # print("SQClient> send_with_action \t%d\t%d" % (getsizeof(ret_val), len(ret_val)))
+                if ret_val in [b'', '']:
+                    # print("=============\n")
+                    break
+                # break  # just for sendall
         self.disconnect()
-        return ret_val
+        return total_ret_val
 
     def enq(self, msg):
         self.send_with_action(msg, b"enq")

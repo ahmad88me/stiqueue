@@ -2,17 +2,18 @@ import socket
 import sys
 import time
 import logging
+import os
 
 
 class SQClient:
 
-    def __init__(self, host="127.0.0.1", port=1234, max_len=10240, logger=None):
+    def __init__(self, host="127.0.0.1", port=1234, logger=None, buff_size=None):
         self.host = host
         self.port = port
-        self.max_len = max_len
         if host is None:
             self.host = socket.gethostname()
         self.socket = None
+        self.buff_size = buff_size
         if logger is None:
             logger = logging.getLogger(__name__)
             # logger.setLevel(logging.CRITICAL)
@@ -26,6 +27,11 @@ class SQClient:
         self.logger.debug("Connecting to %s %d" % (self.host, self.port))
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.host, self.port))
+        if self.buff_size:
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.buff_size)
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, self.buff_size)
+        else:
+            self.buff_size = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
 
     def send_with_action(self, msg, action, recv=False):
         ret_val = None
@@ -35,7 +41,7 @@ class SQClient:
         self.connect()
         self.socket.send(req)
         if recv:
-            ret_val = self.socket.recv(self.max_len)
+            ret_val = self.socket.recv(self.buff_size)
         self.disconnect()
         return ret_val
 
@@ -65,6 +71,10 @@ if __name__ == "__main__":
     ch = logging.NullHandler()
     ch.setLevel(logging.INFO)
     local_logger.addHandler(ch)
+
+    buff_size = None
+    if 'stiq_buff_size' in os.environ:
+        buff_size = int(os.environ['stiq_buff_size'])
 
     c = SQClient(host=host, port=port, logger=local_logger)
     for i in range(10):

@@ -10,27 +10,7 @@ import random
 from sys import getsizeof
 
 
-
-long_txt = """
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent cursus dolor sed tincidunt malesuada. In malesuada,
-metus at suscipit ullamcorper, ante felis consequat risus, sed dignissim ante nisl volutpat leo. Vivamus eleifend justo 
-sed quam molestie pharetra. Duis blandit orci finibus eros faucibus porta. Pellentesque massa massa, aliquet sit amet 
-posuere vitae, eleifend eget nibh. Morbi lacus odio, elementum vitae nunc vel, finibus placerat augue. Nam tincidunt 
-dui diam. Nunc rutrum vel sapien nec consequat. Quisque pellentesque, sem in auctor facilisis, metus sem euismod arcu,
- at vehicula purus est vel justo. Curabitur quis elit tellus. Ut commodo justo non urna tempor, ut semper eros 
- malesuada.
-
-Nulla bibendum odio sed augue varius, ut sodales lorem facilisis. Suspendisse non metus vitae nisl tincidunt ornare.
- Curabitur semper placerat ligula convallis finibus. Pellentesque ornare ut quam non porta. Nam sed rutrum ipsum. Cras 
- tempor efficitur nisl, pulvinar volutpat augue justo.
-"""
-
-for i in range(8):
-    long_txt += long_txt
-
-
-BUFF_SIZE = getsizeof(long_txt) + 10
-# print("sizeof: %d" % BUFF_SIZE)
+BUFF_SIZE = None
 
 
 class ClientStrQueueTest(unittest.TestCase):
@@ -52,7 +32,6 @@ class ClientStrQueueTest(unittest.TestCase):
         p.start()
         cls.server_process = p
         time.sleep(1)
-        # cls.client = SQClient(host=cls.host, port=cls.port)
         cls.client = SQClient(host=cls.host, port=cls.port, buff_size=BUFF_SIZE)
 
     @classmethod

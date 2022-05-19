@@ -24,8 +24,6 @@ class SQServer:
             self.buff_size = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, self.buff_size)
 
-        # print("SQServer> BUFF size: %s" % str(self.buff_size))
-
         if not logger:
             logger = logging.getLogger(__name__)
             # logger.setLevel(logging.CRITICAL)
@@ -54,9 +52,7 @@ class SQServer:
             self.logger.debug(msg)
         self.lock.acquire()
         if self.str_queue:
-            # print("msg len: %d" % len(msg))
             dec_msg = msg.decode()
-            # print("dec_msg len: %d" % len(dec_msg))
             self.q.append(dec_msg)
         else:
             self.q.append(msg)
@@ -67,12 +63,8 @@ class SQServer:
         if len(self.q) > 0:
             v = self.q.pop(0)
             if self.str_queue:
-                # print("SERVER> dequeue v len: %d" % len(v))
                 v = v.encode()
-                # print("SERVER> dequeue v encoded len: %d" % len(v))
             self.logger.debug("SERVER> dequeue: %s" % str(v))
-            # sent_bytes = conn.send(v)
-            # print("SERVER> send bytes: %d" % sent_bytes)
             conn.sendall(v)
         self.lock.release()
 

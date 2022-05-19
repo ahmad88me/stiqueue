@@ -35,7 +35,6 @@ class SQClient:
         self.socket.connect((self.host, self.port))
 
     def send_with_action(self, msg, action, recv=False):
-        ret_val = None
         total_ret_val = None
         req = action+msg
         self.logger.debug("send with action: ")
@@ -50,12 +49,8 @@ class SQClient:
                     total_ret_val = ret_val
                 else:
                     total_ret_val += ret_val
-                # print("SQClient> send_with_action buff size: %d" % self.buff_size)
-                # print("SQClient> send_with_action \t%d\t%d" % (getsizeof(ret_val), len(ret_val)))
                 if ret_val in [b'', '']:
-                    # print("=============\n")
                     break
-                # break  # just for sendall
         self.disconnect()
         return total_ret_val
 

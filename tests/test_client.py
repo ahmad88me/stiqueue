@@ -6,7 +6,7 @@ from stiqueue.sqserver import SQServer
 from stiqueue.sqclient import SQClient
 import os
 import time
-
+import random
 
 class ClientTest(unittest.TestCase):
 
@@ -15,6 +15,7 @@ class ClientTest(unittest.TestCase):
         time.sleep(1)
         host = "127.0.0.1"
         port = 1234
+        port = random.randint(1200, 1300)
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
         if 'sqport' in os.environ:

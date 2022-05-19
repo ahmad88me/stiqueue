@@ -70,6 +70,10 @@ You can see an example of this in `example.client.py`.
 
 ## Run tests
 ```sh run_tests.sh```
+*Note: Rerunning the tests again (within a few seconds from the previous test) have 3% probability of failing as the
+operating system might need a few seconds to release the port of the stiqueue server. You can wait a few seconds after
+the test if you want to ensure that the tests won't fail due to unreleased port*
+
 
 ## Run Docker
 Example of running the server from Docker

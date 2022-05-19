@@ -6,6 +6,7 @@ from example.server import SQServer2 as SQServer
 from example.client import SQClient2 as SQClient
 import os
 import time
+import random
 
 
 class ExampleTest(unittest.TestCase):
@@ -15,6 +16,7 @@ class ExampleTest(unittest.TestCase):
         time.sleep(1)
         host = "127.0.0.1"
         port = 1234
+        port = random.randint(1400, 1500)
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
         if 'sqport' in os.environ:

@@ -6,7 +6,7 @@ from stiqueue.sqserver import SQServer
 from stiqueue.sqclient import SQClient
 import os
 import time
-
+import random
 
 class ClientStrQueueTest(unittest.TestCase):
 
@@ -16,6 +16,7 @@ class ClientStrQueueTest(unittest.TestCase):
         host = "127.0.0.1"
         port = 1234
         port += 2
+        port = random.randint(1300, 1400)
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
         if 'sqport' in os.environ:
@@ -41,12 +42,16 @@ class ClientStrQueueTest(unittest.TestCase):
 
     def test_send_and_recv(self):
         self.client = ClientStrQueueTest.client
-        self.client.enq(b"A")
-        self.client.enq(b"B")
+        # self.client.enq(b"A")
+        # self.client.enq(b"B")
+        self.client.enq("A")
+        self.client.enq("B")
         a = self.client.deq()
         b = self.client.deq()
         empty = self.client.deq()
-        self.assertEqual(a, b"A")
-        self.assertEqual(b, b"B")
+        # self.assertEqual(a, b"A")
+        # self.assertEqual(b, b"B")
+        self.assertEqual(a, "A")
+        self.assertEqual(b, "B")
         self.assertEqual(empty, b'')
 

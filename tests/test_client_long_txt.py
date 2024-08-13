@@ -35,10 +35,7 @@ class ClientStrQueueLongTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        time.sleep(1)
         host = "127.0.0.1"
-        port = 1234
-        port += 2
         port = random.randint(1500, 1600)
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
@@ -49,7 +46,7 @@ class ClientStrQueueLongTest(unittest.TestCase):
         p = multiprocessing.Process(target=cls.start_server, args=(host, port))
         p.start()
         cls.server_process = p
-        time.sleep(1)
+        time.sleep(0.1)
         cls.client = SQClient(host=cls.host, port=cls.port, buff_size=BUFF_SIZE)
 
     @classmethod
@@ -57,21 +54,22 @@ class ClientStrQueueLongTest(unittest.TestCase):
         print("closing things down")
         cls.client.disconnect()
         cls.server_process.terminate()
+        cls.server_process.join()
+        for child in multiprocessing.active_children():
+            child.terminate()
+            child.join()
 
     @classmethod
     def start_server(cls, host, port):
-        s = SQServer(host=host, port=port, str_queue=True, buff_size=BUFF_SIZE)
+        s = SQServer(host=host, port=port, buff_size=BUFF_SIZE)
         s.listen()
 
     def test_send_and_recv_long(self):
         self.client = ClientStrQueueLongTest.client
-        self.client.enq(long_txt)
-        self.client.enq("B")
-        a = self.client.deq()
-        b = self.client.deq()
-        # print(b)
-        # print(type(b))
-        # print(type("B"))
+        self.client.enq(long_txt.encode())
+        self.client.enq(b"B")
+        a = self.client.deq().decode()
+        b = self.client.deq().decode()
         empty = self.client.deq()
         self.assertEqual(empty, '')
         self.assertEqual(a[:100], long_txt[:100])

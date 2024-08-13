@@ -17,8 +17,7 @@ class SQClient:
         self.buff_size = buff_size
         if logger is None:
             logger = logging.getLogger(__name__)
-            # logger.setLevel(logging.CRITICAL)
-            # create console handler and set level to debug
+            logger.setLevel(logging.DEBUG)
             ch = logging.StreamHandler()
             ch.setLevel(logging.DEBUG)
             logger.addHandler(ch)
@@ -36,13 +35,14 @@ class SQClient:
 
     def send_with_action(self, msg, action, recv=False):
         total_ret_val = None
+        if not isinstance(msg, bytes):
+            msg = msg.encode()
         req = action+msg
         self.logger.debug("send with action: ")
         self.logger.debug(req)
         self.connect()
         self.socket.sendall(req)
         if recv:
-            # print("\n-------------")
             while True:
                 ret_val = self.socket.recv(self.buff_size)
                 if total_ret_val is None:
@@ -51,6 +51,7 @@ class SQClient:
                     total_ret_val += ret_val
                 if ret_val in [b'', '']:
                     break
+
         self.disconnect()
         return total_ret_val
 
@@ -89,7 +90,7 @@ if __name__ == "__main__":
     for i in range(10):
         print(b"CLIENT> send num %d" % i)
         c.enq(b"num %d" % i)
-        # time.sleep(0.2)
+
     while True:
         time.sleep(1)
         print(b"CLIENT> get num ")

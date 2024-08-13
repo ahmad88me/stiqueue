@@ -13,28 +13,29 @@ class ExampleTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        time.sleep(1)
         host = "127.0.0.1"
-        port = 1234
         port = random.randint(1400, 1500)
         if 'sqhost' in os.environ:
             host = os.environ['sqhost']
         if 'sqport' in os.environ:
             port = int(os.environ['sqport'])
         cls.host = host
-        port += 1
-        cls.port = port
-        p = multiprocessing.Process(target=cls.start_server, args=(host, port))
-        p.start()
-        cls.server_process = p
-        time.sleep(1)
+        cls.port = port + 1
+
+        cls.server_process = multiprocessing.Process(target=cls.start_server, args=(host, cls.port))
+        cls.server_process.start()
+        time.sleep(0.1)  # Give the server time to start
+
         cls.client = SQClient(host=cls.host, port=cls.port)
 
     @classmethod
     def tearDownClass(cls):
-        print("closing things down")
         cls.client.disconnect()
         cls.server_process.terminate()
+        cls.server_process.join()
+        for child in multiprocessing.active_children():
+            child.terminate()
+            child.join()
 
     @classmethod
     def start_server(cls, host, port):
@@ -42,13 +43,16 @@ class ExampleTest(unittest.TestCase):
         s.listen()
 
     def test_send_and_recv(self):
-        self.client = ExampleTest.client
-        self.client.enq(b"A")
-        self.client.enq(b"B")
-        a = self.client.deq()
-        b = self.client.deq()
-        empty = self.client.deq()
+        client = self.client
+        client.enq(b"A")
+        client.enq(b"B")
+        a = client.deq()
+        b = client.deq()
+        empty = client.deq()
         self.assertEqual(a, b"A")
         self.assertEqual(b, b"B")
         self.assertEqual(empty, b'')
 
+
+if __name__ == '__main__':
+    unittest.main()

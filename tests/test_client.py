@@ -51,3 +51,6 @@ class ClientTest(unittest.TestCase):
         self.assertEqual(b, b"B")
         self.assertEqual(empty, b'')
 
+
+if __name__ == '__main__':
+    unittest.main()

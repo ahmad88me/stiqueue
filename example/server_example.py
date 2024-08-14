@@ -9,17 +9,17 @@ class SQServer2(SQServer):
             if action == b"rev":
                 self.enq(msg[::-1])
             elif action == b"prt":
-                print("printing the queue: ")
+                self.logger.debug("printing the queue: ")
                 for i, msg in enumerate(self.q):
-                    print("q(%d)> %s" % (i, msg))
+                    self.logger.debug("q(%d)> %s" % (i, msg))
             else:
-                print("ERROR: invalid action:")
-                print(action_msg)
-                print(action)
+                self.logger.error("ERROR: invalid action:")
+                self.logger.error(action_msg)
+                self.logger.error(action)
         else:
-            print("Error: invalid action length:")
-            print(action_msg)
-            print(action)
+            self.logger.error("Error: invalid action length:")
+            self.logger.error(action_msg)
+            self.logger.error(action)
 
 
 if __name__ == '__main__':

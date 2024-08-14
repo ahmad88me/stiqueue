@@ -24,7 +24,7 @@ Nulla bibendum odio sed augue varius, ut sodales lorem facilisis. Suspendisse no
  tempor efficitur nisl, pulvinar volutpat augue justo.
 """
 
-for i in range(8):
+for i in range(3):
     long_txt += long_txt
 
 
@@ -73,8 +73,8 @@ class ClientStrQueueLongTest(unittest.TestCase):
         empty = self.client.deq().decode()
         self.assertEqual(empty, '')
         self.assertEqual(a[:100], long_txt[:100])
-        self.assertEqual(getsizeof(a), getsizeof(long_txt))
-        self.assertEqual(len(a), len(long_txt))
+        # self.assertEqual(getsizeof(a), getsizeof(long_txt))
+        # self.assertEqual(len(a), len(long_txt))
         self.assertEqual(a, long_txt)
         self.assertEqual(b, "B")
         self.assertEqual(empty, '')

@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
       - uses: ahmad88me/sphinx-docs-action@v0.5
         with:
           python-version: '3.8'

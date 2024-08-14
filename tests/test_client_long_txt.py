@@ -2,6 +2,7 @@ import sys
 import unittest
 import threading
 import multiprocessing
+import logging
 from stiqueue.sqserver import SQServer
 from stiqueue.sqclient import SQClient
 import os
@@ -47,11 +48,13 @@ class ClientStrQueueLongTest(unittest.TestCase):
         p.start()
         cls.server_process = p
         time.sleep(0.1)
-        cls.client = SQClient(host=cls.host, port=cls.port, buff_size=BUFF_SIZE)
+        logger = logging.getLogger(__name__)
+        ch = logging.NullHandler()
+        logger.addHandler(ch)
+        cls.client = SQClient(host=cls.host, port=cls.port, buff_size=BUFF_SIZE, logger=logger)
 
     @classmethod
     def tearDownClass(cls):
-        print("closing things down")
         cls.client.disconnect()
         cls.server_process.terminate()
         cls.server_process.join()
@@ -61,7 +64,10 @@ class ClientStrQueueLongTest(unittest.TestCase):
 
     @classmethod
     def start_server(cls, host, port):
-        s = SQServer(host=host, port=port, buff_size=BUFF_SIZE)
+        logger = logging.getLogger(__name__)
+        ch = logging.NullHandler()
+        logger.addHandler(ch)
+        s = SQServer(host=host, port=port, buff_size=BUFF_SIZE, logger=logger)
         s.listen()
 
     def test_send_and_recv_long(self):

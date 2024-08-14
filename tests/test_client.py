@@ -1,6 +1,7 @@
 import sys
 import unittest
 import threading
+import logging
 import multiprocessing
 from stiqueue.sqserver import SQServer
 from stiqueue.sqclient import SQClient
@@ -27,17 +28,22 @@ class ClientTest(unittest.TestCase):
         p.start()
         cls.server_process = p
         time.sleep(1)
-        cls.client = SQClient(host=cls.host, port=cls.port)
+        logger = logging.getLogger(__name__)
+        ch = logging.NullHandler()
+        logger.addHandler(ch)
+        cls.client = SQClient(host=cls.host, port=cls.port, logger=logger)
 
     @classmethod
     def tearDownClass(cls):
-        print("closing things down")
         cls.client.disconnect()
         cls.server_process.terminate()
 
     @classmethod
     def start_server(cls, host, port):
-        s = SQServer(host=host, port=port)
+        logger = logging.getLogger(__name__)
+        ch = logging.NullHandler()
+        logger.addHandler(ch)
+        s = SQServer(host=host, port=port, logger=logger)
         s.listen()
 
     def test_send_and_recv(self):

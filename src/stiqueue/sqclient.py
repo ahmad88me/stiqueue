@@ -1,14 +1,39 @@
+"""
+This module implements a simple client for interacting with a message queue server.
+
+Classes:
+    SQClient: A client that connects to the message queue server to enqueue, dequeue, and check the count of messages.
+"""
+
 import socket
 import sys
 import time
 import logging
 import os
-from sys import getsizeof
 
 
 class SQClient:
+    """
+    A client that connects to a message queue server for enqueuing, dequeuing, and retrieving the count of messages.
+
+    Attributes:
+        host (str): The server's host address.
+        port (int): The port number to connect to the server.
+        socket (socket.socket): The client socket to communicate with the server.
+        buff_size (int): Buffer size for sending and receiving messages.
+        logger (logging.Logger): Logger for printing messages.
+    """
 
     def __init__(self, host="127.0.0.1", port=1234, logger=None, buff_size=None):
+        """
+        Initializes the SQClient with the specified parameters.
+
+        Args:
+            host (str): The server's host address. Defaults to "127.0.0.1".
+            port (int): The port number to connect to the server. Defaults to 1234.
+            logger (logging.Logger, optional): Logger for logging messages. If None, a default logger is created.
+            buff_size (int, optional): Buffer size for sending and receiving messages. Defaults to None.
+        """
         self.host = host
         self.port = port
         if host is None:
@@ -24,6 +49,9 @@ class SQClient:
         self.logger = logger
 
     def connect(self):
+        """
+        Establishes a connection to the messaging queue server.
+        """
         self.logger.debug("Connecting to %s %d" % (self.host, self.port))
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         if self.buff_size:
@@ -34,6 +62,17 @@ class SQClient:
         self.socket.connect((self.host, self.port))
 
     def send_with_action(self, msg, action, recv=False):
+        """
+        Sends a message with a specified action to the server.
+
+        Args:
+            msg (bytes or str): The message to send. If not in bytes, it will be encoded.
+            action (bytes): The action command (e.g., "enq", "deq", "cnt").
+            recv (bool): Whether to expect a response from the server. Defaults to False.
+
+        Returns:
+            bytes: The server's response if recv is True, otherwise None.
+        """
         total_ret_val = None
         if not isinstance(msg, bytes):
             msg = msg.encode()
@@ -56,15 +95,36 @@ class SQClient:
         return total_ret_val
 
     def enq(self, msg):
+        """
+        Sends an "enqueue" request to the server.
+
+        Args:
+            msg (bytes or str): The message to enqueue. If not in bytes, it will be encoded.
+        """
         self.send_with_action(msg, b"enq")
 
     def deq(self):
+        """
+        Sends a "dequeue" request to the server and receives the dequeued message.
+
+        Returns:
+            bytes: The dequeued message from the server.
+        """
         return self.send_with_action(b"", b"deq", recv=True)
 
     def cnt(self):
+        """
+        Sends a "count" request to the server and receives the count of messages in the queue.
+
+        Returns:
+            bytes: The count of messages in the queue.
+        """
         return self.send_with_action(b"", b"cnt", recv=True)
 
     def disconnect(self):
+        """
+        Closes the connection to the server.
+        """
         self.socket.close()
 
 

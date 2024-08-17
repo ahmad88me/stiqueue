@@ -8,6 +8,7 @@
 [![PyPI version](https://badge.fury.io/py/stiqueue.svg?kill-cache=1)](https://badge.fury.io/py/stiqueue)
 
 
+
 Stands for stick queue which is a simple messaging queue. It is developed with simplicity and flexibility in mind. 
 
 ## Code docs

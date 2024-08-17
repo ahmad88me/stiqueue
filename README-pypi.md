@@ -7,6 +7,8 @@
 
 Stands for stick queue which is a simple messaging queue. It is developed with simplicity and flexibility in mind.  
 
+## Code docs
+[stiqueue doc](https://ahmad88me.github.io/stiqueue/)
 
 ## Guide 
 

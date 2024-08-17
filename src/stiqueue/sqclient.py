@@ -129,7 +129,7 @@ class SQClient:
 
 
 if __name__ == "__main__":
-    print("CLIENT is STARTED")
+    print("CLIENT is STARTED> ...")
     host = "127.0.0.1"
     port = 1234
     if len(sys.argv) >= 2:

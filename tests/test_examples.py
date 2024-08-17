@@ -3,8 +3,8 @@ import sys
 import unittest
 import threading
 import multiprocessing
-from example.server_example import SQServer2 as SQServer
-from example.client_example import SQClient2 as SQClient
+from examples.server_example import SQServer2 as SQServer
+from examples.client_example import SQClient2 as SQClient
 import os
 import time
 import random

@@ -10,7 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ref: ${{ github.ref_name }}
+
+      - name: Checkout branch
+        run: git checkout ${{ github.ref_name }} 
+
       - uses: ahmad88me/sphinx-docs-action@v0.5
         with:
           python-version: '3.8'

@@ -15,5 +15,6 @@ jobs:
           git-email: 'ahmad88me@gmail.com'
           project-path: 'src'
           commit-message: 'update docs'
+          files-pattern: 'examples/*example*.py'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 

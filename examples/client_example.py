@@ -39,7 +39,7 @@ def main(logger=None):
     msg = p2.deq()
     logger.debug(f"msg P2: (should be empty) = {msg}")
     msg = p1.deq()
-    logger.debug(f"msg P1: (should be empty) = {msg}")
+    logger.debug(f"msg P1: (should be empty)  = {msg}")
 
 
 if __name__ == '__main__':

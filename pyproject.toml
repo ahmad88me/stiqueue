@@ -20,4 +20,5 @@ Homepage = "https://github.com/ahmad88me/stiqueue"
 Issues = "https://github.com/ahmad88me/stiqueue/issues"
 Documentation = "https://ahmad88me.github.io/stiqueue/"
 
-
+[tool.setuptools.packages.find]
+where = ["src"]

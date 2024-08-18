@@ -2,6 +2,7 @@ name: Sphinx Documentation
 
 on:
   push:
+    branches: [ "main" ]
 
 jobs:
   build:

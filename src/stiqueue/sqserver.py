@@ -9,9 +9,11 @@ Functions:
 """
 
 import socket
-from multiprocessing import Lock
+from threading import Thread
 import logging
 import argparse
+from queue import SimpleQueue
+from TPool import WildPool
 
 
 class SQServer:
@@ -20,8 +22,7 @@ class SQServer:
     (dequeuing) of messages.
 
     Attributes:
-        lock (Lock): A lock to synchronize access to the message queue.
-        q (list): A list that acts as the message queue.
+        q (queue.SimpleQueue): A list that acts as the message queue.
         action_len (int): Length of the action command in the message.
         socket (socket): The server socket for accepting connections.
         buff_size (int): Buffer size for sending and receiving messages.
@@ -31,7 +32,8 @@ class SQServer:
         backlog (int): Maximum number of queued connections.
     """
 
-    def __init__(self, host="127.0.0.1", port=1234, backlog=None, action_len=3, logger=None, buff_size=None):
+    def __init__(self, host="127.0.0.1", port=1234, backlog=None, action_len=3, logger=None, buff_size=None,
+                 max_workers=5):
         """
         Initializes the SQServer with the specified parameters.
 
@@ -42,9 +44,9 @@ class SQServer:
             action_len (int): Length of the action command in the message. Defaults to 3.
             logger (logging.Logger, optional): Logger for logging messages. If None, a default logger is created.
             buff_size (int, optional): Buffer size for sending and receiving messages. Defaults to None.
+            max_workers (int): The maximum number of running workers/threads in the TPool.
         """
-        self.lock = Lock()
-        self.q = []
+        self.q = SimpleQueue()
         self.action_len = action_len
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         if buff_size:
@@ -73,6 +75,9 @@ class SQServer:
         self.socket.bind((self.host, self.port))
         self.logger.debug("SERVER> bounded to %s %d" % (self.host, self.port))
 
+        # Using the timeout might make the server stuck if the timeout occur while the lock is acquired
+        self.pool = WildPool(logger=logger, pool_size=max_workers, timeout=0)
+
     def enq(self, msg):
         """
         Enqueues a message into the queue.
@@ -82,9 +87,7 @@ class SQServer:
         """
         self.logger.debug("SERVER> enqueue: ")
         self.logger.debug(msg)
-        self.lock.acquire()
-        self.q.append(msg)
-        self.lock.release()
+        self.q.put(msg, block=False)
 
     def deq(self, conn):
         """
@@ -93,12 +96,27 @@ class SQServer:
         Args:
             conn (socket): The client connection to send the message to.
         """
-        self.lock.acquire()
-        if len(self.q) > 0:
-            v = self.q.pop(0)
-            self.logger.debug("SERVER> dequeue: %s" % str(v))
-            conn.sendall(v)
-        self.lock.release()
+        self.logger.debug("SERVER> Spawning a dequeue thread ... ")
+        th = Thread(target=self._blocking_deq, args=(conn,))
+        self.pool.add_thread(th)
+
+    def _blocking_deq(self, conn):
+        """
+        Dequeues a message from the queue and sends it to the client.
+
+        Args:
+            conn (socket): The client connection to send the message to.
+        """
+        try:
+            self.logger.debug("SERVER> Waiting for the queue ... ")
+            msg = self.q.get(block=True)
+            self.logger.debug("SERVER> dequeue: %s" % str(msg))
+            conn.sendall(msg)
+        except Exception as e:
+            self.logger.error(f"SERVER> exception in blocking deq: {e}")
+        finally:
+            self.logger.debug("SERVER> closing connection: %s" % str(conn))
+            conn.close()
 
     def cnt(self, conn):
         """
@@ -107,7 +125,7 @@ class SQServer:
         Args:
             conn (socket): The client connection to send the count to.
         """
-        b = b'%d' % len(self.q)
+        b = b'%d' % self.q.qsize()
         conn.sendall(b)
 
     def listen(self):
@@ -134,6 +152,7 @@ class SQServer:
             self.socket.listen(self.backlog)
         else:
             self.socket.listen()
+        close_conn = True
         self.logger.debug("SERVER> Waiting for client...")
         conn, addr = self.socket.accept()  # Accept connection when client connects
         self.logger.debug("SERVER> Connected by %s" % str(addr))
@@ -145,6 +164,7 @@ class SQServer:
                 self.enq(msg)
             elif action == b"deq":
                 self.deq(conn)
+                close_conn = False
             elif action == b"cnt":
                 self.cnt(conn)
             else:
@@ -153,12 +173,12 @@ class SQServer:
                 self.other_actions(action_msg)
         else:
             self.logger.error("SERVER> Error: short action length")
-            self.logger.debug(action)
-            self.logger.debug(action_msg)
-            self.logger.debug(action)
-            self.logger.debug(len(action_msg))
-            self.logger.debug(self.action_len)
-        conn.close()
+            self.logger.error(action)
+            self.logger.error(action_msg)
+            self.logger.error(len(action_msg))
+            self.logger.error(self.action_len)
+        if close_conn:
+            conn.close()
 
 
 def cli():

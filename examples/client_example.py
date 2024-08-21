@@ -1,5 +1,5 @@
 import logging
-from stiqueue.sqclient import SQClient
+from stiqueue import SQClient
 
 
 class SQClient2(SQClient):
@@ -36,10 +36,6 @@ def main(logger=None):
     logger.debug("get from P2: ")
     msg = p2.rev()
     logger.debug(f"msg3 rev: {msg}")
-    msg = p2.deq()
-    logger.debug(f"msg P2: (should be empty) = {msg}")
-    msg = p1.deq()
-    logger.debug(f"msg P1: (should be empty)  = {msg}")
 
 
 if __name__ == '__main__':

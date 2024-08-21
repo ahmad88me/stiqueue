@@ -52,10 +52,8 @@ class ClientTest(unittest.TestCase):
         self.client.enq(b"B")
         a = self.client.deq()
         b = self.client.deq()
-        empty = self.client.deq()
         self.assertEqual(a, b"A")
         self.assertEqual(b, b"B")
-        self.assertEqual(empty, b'')
 
 
 if __name__ == '__main__':

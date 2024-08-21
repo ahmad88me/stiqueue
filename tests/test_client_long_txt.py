@@ -76,14 +76,10 @@ class ClientStrQueueLongTest(unittest.TestCase):
         self.client.enq(b"B")
         a = self.client.deq().decode()
         b = self.client.deq().decode()
-        empty = self.client.deq().decode()
-        self.assertEqual(empty, '')
         self.assertEqual(a[:100], long_txt[:100])
-        # self.assertEqual(getsizeof(a), getsizeof(long_txt))
-        # self.assertEqual(len(a), len(long_txt))
+        self.assertEqual(len(a), len(long_txt))
         self.assertEqual(a, long_txt)
         self.assertEqual(b, "B")
-        self.assertEqual(empty, '')
 
 
 if __name__ == '__main__':

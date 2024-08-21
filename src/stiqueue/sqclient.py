@@ -84,11 +84,16 @@ class SQClient:
         if recv:
             while True:
                 ret_val = self.socket.recv(self.buff_size)
+                self.logger.debug(f"DEBUGGING recv: <{ret_val}>")
                 if total_ret_val is None:
                     total_ret_val = ret_val
                 else:
                     total_ret_val += ret_val
                 if ret_val in [b'', '']:
+                    self.logger.debug(f"DEBUGGING: empty")
+                    break
+                if ret_val is None:
+                    self.logger.debug(f"DEBUGGING: time to break")
                     break
 
         self.disconnect()

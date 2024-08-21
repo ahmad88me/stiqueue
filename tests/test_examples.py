@@ -56,10 +56,8 @@ class ExampleTest(unittest.TestCase):
         client.enq(b"DEFG")
         a = client.rev()
         b = client.rev()
-        empty = client.deq()
         self.assertEqual(a, "CBA")
         self.assertEqual(b, "GFED")
-        self.assertEqual(empty, b'')
 
 
 if __name__ == '__main__':

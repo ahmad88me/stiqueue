@@ -5,7 +5,7 @@
 # stiqueue
 
 
-Stands for stick queue which is a simple messaging queue. It is developed with simplicity and flexibility in mind.  
+Stands for stick queue which is a simple messaging queue. It is developed with simplicity and flexibility in mind. 
 
 ## Code docs
 [stiqueue doc](https://ahmad88me.github.io/stiqueue/)
@@ -42,6 +42,9 @@ The client is meant to be used inside your code. Once you install the `stiqueue`
 inside your python project, you can use the client to send and receive messages from the 
 messaging queue. But make sure that the client host and port matches your SQServer.
 
+*Note that the deq is blocking. This would save computation power in comparison to the polling method*
+
+
 #### Client Code Sample
 1. Import and initiate
 ```
@@ -59,7 +62,10 @@ hello_msg = c.deq()
 
 Note that often the client that is sending the messages is different than the one receiving them.
 For example, one client (or app) might be sending the requests and the second client is 
-fetching these messages/requests once a resource becomes available.
+fetching these messages/requests once a resource becomes available. It is also helpful
+to use a Thread Pool such as [TPool](https://github.com/oeg-upm/TPool) to manage the number 
+of running threads.
+
 
 #### Methods
 The followings are a set of methods supported by stiqueue

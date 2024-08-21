@@ -1,4 +1,4 @@
-from stiqueue.sqserver import SQServer
+from stiqueue import SQServer
 
 
 class SQServer2(SQServer):

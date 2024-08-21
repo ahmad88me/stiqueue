@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ahmad88me/sphinx-docs-action@v0.7
+      - uses: ahmad88me/sphinx-docs-action@8196021e8b6827041e807f489f92c657887ef3ce
         with:
           python-version: '3.8'
           git-username: 'ahmad88me'
@@ -19,4 +19,5 @@ jobs:
           commit-message: 'update docs'
           files-pattern: 'examples/*example*.py'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          args: --debug
 

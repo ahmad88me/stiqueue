@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>stiqueue package &#8212; stiqueue 1.1.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=4d79a55a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="stiqueue" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="stiqueue-package">
+<h1>stiqueue package<a class="headerlink" href="#stiqueue-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-stiqueue.sqclient">
+<span id="stiqueue-sqclient-module"></span><h2>stiqueue.sqclient module<a class="headerlink" href="#module-stiqueue.sqclient" title="Permalink to this heading">¶</a></h2>
+<p>This module implements a simple client for interacting with a message queue server.</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><p>SQClient: A client that connects to the message queue server to enqueue, dequeue, and check the count of messages.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stiqueue.sqclient.</span></span><span class="sig-name descname"><span class="pre">SQClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1234</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buff_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A client that connects to a message queue server for enqueuing, dequeuing, and retrieving the count of messages.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.host">
+<span class="sig-name descname"><span class="pre">host</span></span><a class="headerlink" href="#stiqueue.sqclient.SQClient.host" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server’s host address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.port">
+<span class="sig-name descname"><span class="pre">port</span></span><a class="headerlink" href="#stiqueue.sqclient.SQClient.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>The port number to connect to the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.socket">
+<span class="sig-name descname"><span class="pre">socket</span></span><a class="headerlink" href="#stiqueue.sqclient.SQClient.socket" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client socket to communicate with the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>socket.socket</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.buff_size">
+<span class="sig-name descname"><span class="pre">buff_size</span></span><a class="headerlink" href="#stiqueue.sqclient.SQClient.buff_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer size for sending and receiving messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.logger">
+<span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#stiqueue.sqclient.SQClient.logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logger for printing messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.cnt">
+<span class="sig-name descname"><span class="pre">cnt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.cnt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.cnt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a “count” request to the server and receives the count of messages in the queue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The count of messages in the queue.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establishes a connection to the messaging queue server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.deq">
+<span class="sig-name descname"><span class="pre">deq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.deq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.deq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a “dequeue” request to the server and receives the dequeued message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The dequeued message from the server.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection to the server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.enq">
+<span class="sig-name descname"><span class="pre">enq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.enq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.enq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends an “enqueue” request to the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>bytes</em><em> or </em><em>str</em>) – The message to enqueue. If not in bytes, it will be encoded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.send_with_action">
+<span class="sig-name descname"><span class="pre">send_with_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.send_with_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.send_with_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a message with a specified action to the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>bytes</em><em> or </em><em>str</em>) – The message to send. If not in bytes, it will be encoded.</p></li>
+<li><p><strong>action</strong> (<em>bytes</em>) – The action command (e.g., “enq”, “deq”, “cnt”).</p></li>
+<li><p><strong>recv</strong> (<em>bool</em>) – Whether to expect a response from the server. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The server’s response if recv is True, otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="stiqueue-sqserver-module">
+<h2>stiqueue.sqserver module<a class="headerlink" href="#stiqueue-sqserver-module" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">stiqueue</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">stiqueue package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stiqueue.sqclient">stiqueue.sqclient module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stiqueue-sqserver-module">stiqueue.sqserver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">stiqueue</a></li>
+      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Ahmad Alobaid.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/stiqueue.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>stiqueue &#8212; stiqueue 1.1.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=4d79a55a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="stiqueue package" href="stiqueue.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <a class="reference external image-reference" href="https://github.com/ahmad88me/stiqueue/raw/main/stiqueue.png"><img alt="stiqueue" src="https://github.com/ahmad88me/stiqueue/raw/main/stiqueue.png" /></a>
+<section id="stiqueue">
+<h1>stiqueue<a class="headerlink" href="#stiqueue" title="Permalink to this heading">¶</a></h1>
+<p>Stands for stick queue which is a simple messaging queue. It is developed with simplicity and flexibility in mind.</p>
+<section id="code-docs">
+<h2>Code docs<a class="headerlink" href="#code-docs" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="https://ahmad88me.github.io/stiqueue/">stiqueue doc</a></p>
+</section>
+<section id="guide">
+<h2>Guide<a class="headerlink" href="#guide" title="Permalink to this heading">¶</a></h2>
+<section id="sqserver">
+<h3>SQServer<a class="headerlink" href="#sqserver" title="Permalink to this heading">¶</a></h3>
+<p>You can run the SQServer directly without the need to write any piece of code.
+The server will handle the messaging queue. Once the code is downloaded, you can run it as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">src</span><span class="o">/</span><span class="n">stiqueue</span><span class="o">/</span><span class="n">sqserver</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0.0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">1234</span> <span class="o">--</span><span class="n">debug</span>
+</pre></div>
+</div>
+<p>It is recommended to use the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> if you are running it for the first time to
+see when the server is getting a message or once a message is leaving the queue.</p>
+<section id="usage">
+<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h4>
+<p>The following is the command line options</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">StiQueue</span> <span class="n">Server</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">debug</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">buff</span><span class="o">-</span><span class="n">size</span> <span class="n">BUFF_SIZE</span><span class="p">]</span>
+
+<span class="n">A</span> <span class="n">message</span> <span class="n">queue</span> <span class="n">server</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">debug</span>               <span class="n">Showing</span> <span class="n">debug</span> <span class="n">messages</span>
+  <span class="o">--</span><span class="n">host</span> <span class="n">HOST</span>           <span class="n">The</span> <span class="n">host</span> <span class="n">address</span> <span class="n">of</span> <span class="n">the</span> <span class="n">server</span>
+  <span class="o">--</span><span class="n">port</span> <span class="n">PORT</span>           <span class="n">The</span> <span class="n">port</span> <span class="n">to</span> <span class="n">listen</span> <span class="n">on</span>
+  <span class="o">--</span><span class="n">buff</span><span class="o">-</span><span class="n">size</span> <span class="n">BUFF_SIZE</span>
+                        <span class="n">The</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">buffer</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sqclient">
+<h3>SQClient<a class="headerlink" href="#sqclient" title="Permalink to this heading">¶</a></h3>
+<p>The client is meant to be used inside your code. Once you install the <code class="docutils literal notranslate"><span class="pre">stiqueue</span></code> package
+inside your python project, you can use the client to send and receive messages from the
+messaging queue. But make sure that the client host and port matches your SQServer.</p>
+<p><em>Note that the deq is blocking. This would save computation power in comparison to the polling method</em></p>
+<section id="client-code-sample">
+<h4>Client Code Sample<a class="headerlink" href="#client-code-sample" title="Permalink to this heading">¶</a></h4>
+<ol class="arabic simple">
+<li><p>Import and initiate</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stiqueue.sqclient</span> <span class="kn">import</span> <span class="n">SQClient</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">SQClient</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Send a message</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">enq</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Fetch the message</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hello_msg</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">deq</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that often the client that is sending the messages is different than the one receiving them.
+For example, one client (or app) might be sending the requests and the second client is
+fetching these messages/requests once a resource becomes available. It is also helpful
+to use a Thread Pool such as <a class="reference external" href="https://github.com/oeg-upm/TPool">TPool</a> to manage the number
+of running threads.</p>
+</section>
+<section id="methods">
+<h4>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h4>
+<p>The followings are a set of methods supported by stiqueue</p>
+<ul class="simple">
+<li><p><strong>enq</strong>: to add to the queue (enqueue).</p></li>
+<li><p><strong>deq</strong>: to get a value from the queue (dequeue).</p></li>
+<li><p><strong>cnt</strong>: number of items in the queue.</p></li>
+</ul>
+</section>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h3>
+<section id="client-example">
+<h4>Client example<a class="headerlink" href="#client-example" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stiqueue.sqclient</span> <span class="kn">import</span> <span class="n">SQClient</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">SQClient</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">enq</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;This is message one&quot;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">enq</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;This is message two&quot;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">enq</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;This is message three&quot;</span><span class="p">)</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">deq</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;msg1: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">deq</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;msg2: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">deq</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;msg3: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the reason that <code class="docutils literal notranslate"><span class="pre">decode</span></code> is used because the <code class="docutils literal notranslate"><span class="pre">deq</span></code> returns <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
+</section>
+<section id="server-example">
+<h4>Server example<a class="headerlink" href="#server-example" title="Permalink to this heading">¶</a></h4>
+<p>In case you want to extend the server code or want to use it, you can use the following code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stiqueue.sqserver</span> <span class="kn">import</span> <span class="n">SQServer</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SQServer</span><span class="p">()</span>
+<span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that in most cases you do not want to call the server from your code. You can just run the
+server script as explained in the guide.</p>
+</section>
+</section>
+<section id="extend">
+<h3>Extend<a class="headerlink" href="#extend" title="Permalink to this heading">¶</a></h3>
+<p>In most cases, you won’t need to extend any of the classes, but in case you want to do so,
+we provide two samples extending stiqueue with more functionality (optional). <a class="reference external" href="https://github.com/ahmad88me/stiqueue/tree/main/example">examples</a></p>
+</section>
+</section>
+<section id="run-tests">
+<h2>Run tests<a class="headerlink" href="#run-tests" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">unittest</span> <span class="pre">discover</span></code></p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="stiqueue.html">stiqueue package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stiqueue.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiqueue.html#module-stiqueue.sqclient">stiqueue.sqclient module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiqueue.html#stiqueue-sqserver-module">stiqueue.sqserver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiqueue.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/client_example.html">Client Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/server_example.html">Server Example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">stiqueue</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="stiqueue.html">stiqueue package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="stiqueue.html" title="next chapter">stiqueue package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Ahmad Alobaid.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

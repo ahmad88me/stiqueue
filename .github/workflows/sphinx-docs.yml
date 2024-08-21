@@ -20,4 +20,3 @@ jobs:
           files-pattern: 'examples/*example*.py'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           args: --debug
-

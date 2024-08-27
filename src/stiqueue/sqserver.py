@@ -9,6 +9,7 @@ Functions:
 """
 
 import socket
+import traceback
 from threading import Thread
 import logging
 import argparse
@@ -76,7 +77,8 @@ class SQServer:
         self.logger.debug("SERVER> bounded to %s %d" % (self.host, self.port))
 
         # Using the timeout might make the server stuck if the timeout occur while the lock is acquired
-        self.pool = WildPool(logger=logger, pool_size=max_workers, timeout=0)
+        self.pool = WildPool(logger=logger, pool_size=max_workers)
+        self.pool.start_worker()
 
     def enq(self, msg):
         """
@@ -114,6 +116,7 @@ class SQServer:
             conn.sendall(msg)
         except Exception as e:
             self.logger.error(f"SERVER> exception in blocking deq: {e}")
+            self.logger.error(traceback.format_exc())
         finally:
             self.logger.debug("SERVER> closing connection: %s" % str(conn))
             conn.close()
@@ -178,6 +181,7 @@ class SQServer:
             self.logger.error(len(action_msg))
             self.logger.error(self.action_len)
         if close_conn:
+            self.logger.debug(f"===Closing connection from listen single {conn}")
             conn.close()
 
 

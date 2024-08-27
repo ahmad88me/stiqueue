@@ -147,19 +147,11 @@ if __name__ == "__main__":
     ch.setLevel(logging.INFO)
     local_logger.addHandler(ch)
 
-    buff_size = None
-    if 'stiq_buff_size' in os.environ:
-        buff_size = int(os.environ['stiq_buff_size'])
-
     c = SQClient(host=host, port=port, logger=local_logger)
     for i in range(10):
-        print(b"CLIENT> send num %d" % i)
+        print(f"\n=========== {i} ==========")
+        print(f"CLIENT> send num {i}")
         c.enq(b"num %d" % i)
-
-    while True:
-        time.sleep(1)
-        print(b"CLIENT> get num ")
+        print("CLIENT> deq")
         v = c.deq()
-        if v == b"":
-            continue
-        print("CLIENT: Getting value: %s" % str(v))
+        print(f"CLIENT: get num: {v}" )

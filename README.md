@@ -76,9 +76,9 @@ of running threads.
 #### Methods
 
 The following methods are supported by `stiqueue`: 
-* **`enq`**: Add a message to the queue (enqueue). 
-* **`deq`**: Retrieve a message from the queue (dequeue). 
-* **`cnt`**: Get the number of items in the queue.
+* `enq`: Add a message to the queue (enqueue). 
+* `deq`: Retrieve a message from the queue (dequeue). 
+* `cnt`: Get the number of items in the queue.
 
 ### Examples
 

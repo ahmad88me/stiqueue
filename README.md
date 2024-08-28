@@ -12,7 +12,7 @@ StiQueue, which stands for "stick queue," is inspired by the simplicity of a sti
 
 
 ## Code Documentation 
-For detailed code documentation, visit the [StiQueue Documentation](https://ahmad88me.github.io/stiqueue/).”
+For detailed code documentation, visit the [StiQueue Documentation](https://ahmad88me.github.io/stiqueue/).
 
 ## Guide 
 

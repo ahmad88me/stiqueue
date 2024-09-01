@@ -159,7 +159,16 @@ class SQServer:
         self.logger.debug("SERVER> Waiting for client...")
         conn, addr = self.socket.accept()  # Accept connection when client connects
         self.logger.debug("SERVER> Connected by %s" % str(addr))
-        action_msg = conn.recv(self.buff_size)  # Receive client data
+        # action_msg = conn.recv(self.buff_size)  # Receive client data
+        action_msg = b""
+        while True:
+            recv_data = conn.recv(self.buff_size)  # Receive client data
+            if recv_data:
+                action_msg += recv_data
+                if len(recv_data) < self.buff_size:
+                    break
+            else:
+                break
         action = action_msg[:self.action_len]
         if len(action_msg) >= self.action_len:
             msg = action_msg[self.action_len:]

@@ -92,8 +92,11 @@ class SQClient:
                 if ret_val in [b'', '']:
                     self.logger.debug(f"DEBUGGING: empty")
                     break
-                if ret_val is None:
+                elif ret_val is None:
                     self.logger.debug(f"DEBUGGING: time to break")
+                    break
+                elif len(ret_val) < self.buff_size:
+                    self.logger.debug(f"DEBUGGING: ret val is smaller than buff size")
                     break
 
         self.disconnect()

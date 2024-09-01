@@ -39,6 +39,8 @@ options:
   --host HOST               The host address of the server
   --port PORT               The port to listen on
   --buff-size BUFF_SIZE     The size of the buffer
+  --log LOG                 The log file
+
 ```
 
 ### SQClient

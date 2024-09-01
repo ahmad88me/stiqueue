@@ -12,6 +12,7 @@ import socket
 import traceback
 from threading import Thread
 import logging
+from logging import handlers
 import argparse
 from queue import SimpleQueue
 from TPool import WildPool
@@ -114,6 +115,7 @@ class SQServer:
             msg = self.q.get(block=True)
             self.logger.debug("SERVER> dequeue: %s" % str(msg))
             conn.sendall(msg)
+
         except Exception as e:
             self.logger.error(f"SERVER> exception in blocking deq: {e}")
             self.logger.error(traceback.format_exc())
@@ -209,15 +211,30 @@ def cli():
     parser.add_argument('--host', default="127.0.0.1", help="The host address of the server")
     parser.add_argument('--port', type=int, default=1234, help="The port to listen on")
     parser.add_argument('--buff-size', type=int, help="The size of the buffer")
+    parser.add_argument('--log', help="The log file")
+
     args = parser.parse_args()
-    if args.debug:
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
-        logger.addHandler(ch)
+    logger = logging.getLogger(__name__)
+    if args.log:
+        ch = handlers.RotatingFileHandler(args.log)
     else:
-        logger = None
+        ch = logging.StreamHandler()
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        ch.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+        ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+
+    # if args.debug:
+    #     logger = logging.getLogger(__name__)
+    #     logger.setLevel(logging.DEBUG)
+    #     ch = logging.StreamHandler()
+    #     ch.setLevel(logging.DEBUG)
+    #     logger.addHandler(ch)
+    # else:
+    #     logger = None
     s = SQServer(host=args.host, port=args.port, logger=logger, buff_size=args.buff_size)
     s.listen()
 

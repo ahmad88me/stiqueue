@@ -117,6 +117,8 @@ class SQServer:
         except Exception as e:
             self.logger.error(f"SERVER> exception in blocking deq: {e}")
             self.logger.error(traceback.format_exc())
+            self.logger.error(f"SERVER> Adding the msg again to the queue. {msg}")
+            self.enq(msg)
         finally:
             self.logger.debug("SERVER> closing connection: %s" % str(conn))
             conn.close()
@@ -190,7 +192,7 @@ class SQServer:
             self.logger.error(len(action_msg))
             self.logger.error(self.action_len)
         if close_conn:
-            self.logger.debug(f"===Closing connection from listen single {conn}")
+            self.logger.debug(f"SERVER> Closing connection from listen single {conn}")
             conn.close()
 
 

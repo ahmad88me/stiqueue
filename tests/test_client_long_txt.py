@@ -25,11 +25,8 @@ Nulla bibendum odio sed augue varius, ut sodales lorem facilisis. Suspendisse no
  tempor efficitur nisl, pulvinar volutpat augue justo.
 """
 
-for i in range(2):
+for i in range(3):
     long_txt += long_txt
-
-
-BUFF_SIZE = getsizeof(long_txt) + 10
 
 
 class ClientStrQueueLongTest(unittest.TestCase):
@@ -51,7 +48,7 @@ class ClientStrQueueLongTest(unittest.TestCase):
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)
-        cls.client = SQClient(host=cls.host, port=cls.port, buff_size=BUFF_SIZE, logger=logger)
+        cls.client = SQClient(host=cls.host, port=cls.port, logger=logger)
 
     @classmethod
     def tearDownClass(cls):
@@ -67,7 +64,7 @@ class ClientStrQueueLongTest(unittest.TestCase):
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)
-        s = SQServer(host=host, port=port, buff_size=BUFF_SIZE, logger=logger)
+        s = SQServer(host=host, port=port, logger=logger)
         s.listen()
 
     def test_send_and_recv_long(self):

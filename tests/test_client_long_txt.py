@@ -25,7 +25,7 @@ Nulla bibendum odio sed augue varius, ut sodales lorem facilisis. Suspendisse no
  tempor efficitur nisl, pulvinar volutpat augue justo.
 """
 
-for i in range(3):
+for i in range(2):
     long_txt += long_txt
 
 

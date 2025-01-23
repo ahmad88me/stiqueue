@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Client Example &#8212; stiqueue 1.1.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=6625fa76" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=039e1c02" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2288b18e"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
@@ -33,19 +33,19 @@
             
   <section id="client-example">
 <h1>Client Example<a class="headerlink" href="#client-example" title="Permalink to this heading">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">stiqueue</span> <span class="kn">import</span> <span class="n">SQClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stiqueue</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQClient</span>
 
 
-<span class="k">class</span> <span class="nc">SQClient2</span><span class="p">(</span><span class="n">SQClient</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SQClient2</span><span class="p">(</span><span class="n">SQClient</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">rev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_with_action</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;deq&quot;</span><span class="p">,</span> <span class="n">recv</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">msg</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">get_logger</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">():</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
     <span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
@@ -54,7 +54,7 @@
     <span class="k">return</span> <span class="n">logger</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
 
@@ -140,7 +140,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2024, Ahmad Alobaid.
+      &copy;2025, Ahmad Alobaid.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>

@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="297mm"
-   height="210mm"
-   viewBox="0 0 297 210"
+   width="289.48834mm"
+   height="103.11172mm"
+   viewBox="0 0 289.48834 103.11172"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
    sodipodi:docname="stiqueue.svg"
    inkscape:export-filename="/Users/aalobaid/Dropbox/Drawingworkspace/stiqueue.png"
    inkscape:export-xdpi="18.142857"
@@ -26,28 +26,31 @@
      inkscape:pagecheckerboard="1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.33071229"
-     inkscape:cx="562.42239"
-     inkscape:cy="22.678322"
+     inkscape:zoom="0.46056244"
+     inkscape:cx="559.09901"
+     inkscape:cy="423.39536"
      inkscape:window-width="1232"
      inkscape:window-height="747"
      inkscape:window-x="48"
-     inkscape:window-y="25"
+     inkscape:window-y="39"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="0"
+     inkscape:deskcolor="#505050" />
   <defs
      id="defs2">
     <rect
        x="179.60315"
-       y="132.56423"
+       y="132.56422"
        width="744.07019"
-       height="318.58178"
+       height="318.58179"
        id="rect1926" />
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-4.1653663,-28.496724)">
     <text
        xml:space="preserve"
        transform="scale(0.26458333)"
@@ -55,27 +58,27 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1926);fill:#000000;fill-opacity:1;stroke:none" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:50.8px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="font-style:normal;font-weight:normal;font-size:50.8px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="2.8285663"
        y="75.239998"
        id="text3824"><tspan
          sodipodi:role="line"
          id="tspan3822"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.8px;font-family:Verdana;-inkscape-font-specification:Verdana;fill:#f2f2f2;stroke-width:2;stroke:#000000;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.8px;font-family:Verdana;-inkscape-font-specification:Verdana;fill:#f2f2f2;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          x="2.8285663"
          y="75.239998"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';stroke:#000000;stroke-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="tspan19811">STI</tspan></tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:50.8px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="font-style:normal;font-weight:normal;font-size:50.8px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="92.323509"
        y="17.390987"
        id="text3824-8"
        transform="rotate(29.381903)"><tspan
          sodipodi:role="line"
          id="tspan3822-3"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.8px;font-family:Verdana;-inkscape-font-specification:Verdana;fill:#f2f2f2;stroke-width:1;stroke:#000000;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.8px;font-family:Verdana;-inkscape-font-specification:Verdana;fill:#f2f2f2;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          x="92.323509"
          y="17.390987">Q</tspan></text>
     <rect

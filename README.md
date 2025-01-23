@@ -1,5 +1,5 @@
 
-<img src="https://github.com/ahmad88me/stiqueue/raw/main/stiqueue.png" width="200">
+<img src="https://github.com/ahmad88me/stiqueue/raw/main/stiqueue.svg" width="200">
 
 # stiqueue
 

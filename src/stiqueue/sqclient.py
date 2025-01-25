@@ -22,9 +22,10 @@ class SQClient:
         socket (socket.socket): The client socket to communicate with the server.
         buff_size (int): Buffer size for sending and receiving messages.
         logger (logging.Logger): Logger for printing messages.
+        ack_required (bool): Indicates whether an acknowledgment is required after the client receives the message.
     """
 
-    def __init__(self, host="127.0.0.1", port=1234, logger=None, buff_size=None):
+    def __init__(self, host="127.0.0.1", port=1234, logger=None, buff_size=None, ack_required=True):
         """
         Initializes the SQClient with the specified parameters.
 
@@ -33,9 +34,11 @@ class SQClient:
             port (int): The port number to connect to the server. Defaults to 1234.
             logger (logging.Logger, optional): Logger for logging messages. If None, a default logger is created.
             buff_size (int, optional): Buffer size for sending and receiving messages. Defaults to None.
+            ack_required (bool): Indicates whether an acknowledgment is required after the client receives the message.
         """
         self.host = host
         self.port = port
+        self.ack_required = ack_required
         if host is None:
             self.host = socket.gethostname()
         self.socket = None
@@ -118,7 +121,17 @@ class SQClient:
         Returns:
             bytes: The dequeued message from the server.
         """
-        return self.send_with_action(b"", b"deq", recv=True)
+        msg = self.send_with_action(b"", b"deq", recv=True)
+        if self.ack_required:
+            self.ack()
+        return msg
+
+    def ack(self):
+        """
+        Sends an acknowledgement request to the server.
+
+        """
+        self.send_with_action(b"", b"ack")
 
     def cnt(self):
         """

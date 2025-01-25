@@ -32,10 +32,13 @@ class SQServer:
         host (str): Host address of the server.
         port (int): Port number to bind the server.
         backlog (int): Maximum number of queued connections.
+        ack_required (bool): Indicates whether an acknowledgment is required after the client receives the message.
+        ack_timeout (int): The time (in seconds) to wait before considering the acknowledgment message as not received.
+
     """
 
     def __init__(self, host="127.0.0.1", port=1234, backlog=None, action_len=3, logger=None, buff_size=None,
-                 max_workers=5):
+                 max_workers=5, ack_required=False, ack_timeout=3):
         """
         Initializes the SQServer with the specified parameters.
 
@@ -47,10 +50,17 @@ class SQServer:
             logger (logging.Logger, optional): Logger for logging messages. If None, a default logger is created.
             buff_size (int, optional): Buffer size for sending and receiving messages. Defaults to None.
             max_workers (int): The maximum number of running workers/threads in the TPool.
+            ack_required (bool): Indicates whether an acknowledgment message is required after the client receives the message.
+            ack_timeout (int): The time (in seconds) to wait before considering the acknowledgment as not received.
+
         """
         self.q = SimpleQueue()
         self.action_len = action_len
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.ack_required = ack_required
+        self.ack_timeout = 3
+        if isinstance(ack_timeout, int) and ack_timeout > 0:
+            self.ack_timeout = ack_timeout
         if buff_size:
             self.buff_size = buff_size
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, buff_size)
@@ -115,7 +125,14 @@ class SQServer:
             msg = self.q.get(block=True)
             self.logger.debug("SERVER> dequeue: %s" % str(msg))
             conn.sendall(msg)
-
+            if self.ack_required:
+                conn.settimeout(self.ack_timeout)
+                acknowledged = conn.recv(self.buff_size)
+                if acknowledged == b"ack":
+                    self.logger.debug("SERVER> acknowledged")
+                else:
+                    self.logger.debug(f"SERVER> not acknowledged <{str(acknowledged)}>")
+                    raise Exception("Not Acknowledged")
         except Exception as e:
             self.logger.error(f"SERVER> exception in blocking deq: {e}")
             self.logger.error(traceback.format_exc())
@@ -163,7 +180,6 @@ class SQServer:
         self.logger.debug("SERVER> Waiting for client...")
         conn, addr = self.socket.accept()  # Accept connection when client connects
         self.logger.debug("SERVER> Connected by %s" % str(addr))
-        # action_msg = conn.recv(self.buff_size)  # Receive client data
         action_msg = b""
         while True:
             recv_data = conn.recv(self.buff_size)  # Receive client data
@@ -227,14 +243,6 @@ def cli():
         ch.setLevel(logging.INFO)
     logger.addHandler(ch)
 
-    # if args.debug:
-    #     logger = logging.getLogger(__name__)
-    #     logger.setLevel(logging.DEBUG)
-    #     ch = logging.StreamHandler()
-    #     ch.setLevel(logging.DEBUG)
-    #     logger.addHandler(ch)
-    # else:
-    #     logger = None
     s = SQServer(host=args.host, port=args.port, logger=logger, buff_size=args.buff_size)
     s.listen()
 

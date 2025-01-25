@@ -1,10 +1,10 @@
 [project]
 name = "stiqueue"
-version = "1.1.4"
+version = "1.2.0"
 authors = [
   { name="Ahmad Alobaid", email="ahmad88me@gmail.com"},
 ]
-description = "A simple messaging queue"
+description = "StiQueue is a lightweight messaging queue system designed to be simple, flexible, and easy to use."
 readme = "README-pypi.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE"}

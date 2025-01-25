@@ -53,9 +53,10 @@
 <span class="sd">        socket (socket.socket): The client socket to communicate with the server.</span>
 <span class="sd">        buff_size (int): Buffer size for sending and receiving messages.</span>
 <span class="sd">        logger (logging.Logger): Logger for printing messages.</span>
+<span class="sd">        ack_required (bool): Indicates whether an acknowledgment is required after the client receives the message.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buff_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buff_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ack_required</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the SQClient with the specified parameters.</span>
 
@@ -64,9 +65,11 @@
 <span class="sd">            port (int): The port number to connect to the server. Defaults to 1234.</span>
 <span class="sd">            logger (logging.Logger, optional): Logger for logging messages. If None, a default logger is created.</span>
 <span class="sd">            buff_size (int, optional): Buffer size for sending and receiving messages. Defaults to None.</span>
+<span class="sd">            ack_required (bool): Indicates whether an acknowledgment is required after the client receives the message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ack_required</span> <span class="o">=</span> <span class="n">ack_required</span>
         <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="kc">None</span>
@@ -149,7 +152,17 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bytes: The dequeued message from the server.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_with_action</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;deq&quot;</span><span class="p">,</span> <span class="n">recv</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_with_action</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;deq&quot;</span><span class="p">,</span> <span class="n">recv</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ack_required</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">msg</span></div>
+
+<div class="viewcode-block" id="SQClient.ack"><a class="viewcode-back" href="../../stiqueue.html#stiqueue.sqclient.SQClient.ack">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">ack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends an acknowledgement request to the server.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_with_action</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;ack&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SQClient.cnt"><a class="viewcode-back" href="../../stiqueue.html#stiqueue.sqclient.SQClient.cnt">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">cnt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

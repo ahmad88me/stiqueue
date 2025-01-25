@@ -76,10 +76,10 @@ of running threads.
 #### Methods
 
 The following methods are supported by `stiqueue`:
-* **`enq(msg: bytes)`**: Adds a message to the queue. 
-* **`deq() -> bytes`**: Retrieves the next message from the queue (blocking call). 
-* **`cnt() -> int`**: Returns the number of messages currently in the queue. 
-* **`ack()`**: Acknowledges a message when `ack_required=True`. If not acknowledged within `ack_timeout`, 
+* `enq(msg: bytes)`: Adds a message to the queue. 
+* `deq() -> bytes`: Retrieves the next message from the queue (blocking call). 
+* `cnt() -> int`: Returns the number of messages currently in the queue. 
+* `ack()`: Acknowledges a message when `ack_required=True`. If not acknowledged within `ack_timeout`, 
 the server re-enqueues the message.
 
 > **Note**: When `ack_required=True` and the client process crashes after calling `deq`, messages are automatically 
@@ -139,8 +139,7 @@ python -m unittest tests.<test_file_name>
 
 
 
-**Key Highlights**
-------------------
+## Key Highlights
 * **Lightweight and Flexible**: Minimal dependencies and easy to integrate. 
 * **Blocking Dequeue**: Efficient for resource-limited systems. 
 * **Reliable Messaging**: Optional message acknowledgments to ensure no data loss. 

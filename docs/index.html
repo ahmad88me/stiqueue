@@ -102,10 +102,10 @@ of running threads.</p>
 <h3>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h3>
 <p>The following methods are supported by <code class="docutils literal notranslate"><span class="pre">stiqueue</span></code>:</p>
 <ul class="simple">
-<li><p><strong>``enq(msg: bytes)``</strong>: Adds a message to the queue.</p></li>
-<li><p><strong>``deq() -&gt; bytes``</strong>: Retrieves the next message from the queue (blocking call).</p></li>
-<li><p><strong>``cnt() -&gt; int``</strong>: Returns the number of messages currently in the queue.</p></li>
-<li><p><strong>``ack()``</strong>: Acknowledges a message when <code class="docutils literal notranslate"><span class="pre">ack_required=True</span></code>. If not acknowledged within <code class="docutils literal notranslate"><span class="pre">ack_timeout</span></code>,
+<li><p><code class="docutils literal notranslate"><span class="pre">enq(msg:</span> <span class="pre">bytes)</span></code>: Adds a message to the queue.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deq()</span> <span class="pre">-&gt;</span> <span class="pre">bytes</span></code>: Retrieves the next message from the queue (blocking call).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cnt()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code>: Returns the number of messages currently in the queue.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ack()</span></code>: Acknowledges a message when <code class="docutils literal notranslate"><span class="pre">ack_required=True</span></code>. If not acknowledged within <code class="docutils literal notranslate"><span class="pre">ack_timeout</span></code>,
 the server re-enqueues the message.</p></li>
 </ul>
 <blockquote>
@@ -161,7 +161,7 @@ Examples of extending StiQueue are available in the
 </section>
 </section>
 <section id="key-highlights">
-<h1><strong>Key Highlights</strong><a class="headerlink" href="#key-highlights" title="Permalink to this heading">¶</a></h1>
+<h1>Key Highlights<a class="headerlink" href="#key-highlights" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><strong>Lightweight and Flexible</strong>: Minimal dependencies and easy to integrate.</p></li>
 <li><p><strong>Blocking Dequeue</strong>: Efficient for resource-limited systems.</p></li>

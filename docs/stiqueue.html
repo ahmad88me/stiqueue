@@ -14,7 +14,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="stiqueue" href="index.html" />
+    <link rel="prev" title="Documentation" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -45,7 +45,7 @@
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="stiqueue.sqclient.SQClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stiqueue.sqclient.</span></span><span class="sig-name descname"><span class="pre">SQClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1234</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buff_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stiqueue.sqclient.</span></span><span class="sig-name descname"><span class="pre">SQClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1234</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buff_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ack_required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A client that connects to a message queue server for enqueuing, dequeuing, and retrieving the count of messages.</p>
 <dl class="py attribute">
@@ -101,6 +101,23 @@
 <dd class="field-odd"><p>logging.Logger</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.ack_required">
+<span class="sig-name descname"><span class="pre">ack_required</span></span><a class="headerlink" href="#stiqueue.sqclient.SQClient.ack_required" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether an acknowledgment is required after the client receives the message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.ack">
+<span class="sig-name descname"><span class="pre">ack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.ack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.ack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends an acknowledgement request to the server.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -219,7 +236,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">stiqueue</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Documentation</a></li>
       <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
   </ul></li>
 </ul>

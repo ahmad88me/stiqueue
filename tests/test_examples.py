@@ -9,28 +9,25 @@ import os
 import time
 import random
 
+SLEEP = 0.25
 
 class ExampleTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         host = "127.0.0.1"
-        port = random.randint(1400, 1500)
-        if 'sqhost' in os.environ:
-            host = os.environ['sqhost']
-        if 'sqport' in os.environ:
-            port = int(os.environ['sqport'])
         cls.host = host
-        cls.port = port + 1
+        avai_port_found = False
+        while not avai_port_found:
+            cls.port = random.randint(1400, 1500)
+            cls.server_process = multiprocessing.Process(target=cls.start_server, args=(host, cls.port))
+            cls.server_process.start()
+            time.sleep(0.1)
+            avai_port_found = cls.server_process.is_alive()
 
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)
-
-        cls.server_process = multiprocessing.Process(target=cls.start_server, args=(host, cls.port))
-        cls.server_process.start()
-        time.sleep(0.1)  # Give the server time to start
-
         cls.client = SQClient(host=cls.host, port=cls.port, logger=logger)
 
     @classmethod

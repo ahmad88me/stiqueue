@@ -9,6 +9,8 @@ import os
 import time
 import random
 
+SLEEP = 0.25
+
 
 class ClientTest(unittest.TestCase):
 
@@ -16,17 +18,21 @@ class ClientTest(unittest.TestCase):
     def setUpClass(cls):
         time.sleep(1)
         host = "127.0.0.1"
-        port = random.randint(1200, 1300)
-        if 'sqhost' in os.environ:
-            host = os.environ['sqhost']
-        if 'sqport' in os.environ:
-            port = int(os.environ['sqport'])
-        cls.host = host
-        cls.port = port
-        p = multiprocessing.Process(target=cls.start_server, args=(host, port))
-        p.start()
-        cls.server_process = p
-        time.sleep(1)
+        avai_port_found = False
+        while not avai_port_found:
+            port = random.randint(1200, 1300)
+            if 'sqhost' in os.environ:
+                host = os.environ['sqhost']
+            if 'sqport' in os.environ:
+                port = int(os.environ['sqport'])
+            cls.host = host
+            cls.port = port
+            p = multiprocessing.Process(target=cls.start_server, args=(host, port))
+            p.start()
+            cls.server_process = p
+            time.sleep(SLEEP)
+            avai_port_found = p.is_alive()
+
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)

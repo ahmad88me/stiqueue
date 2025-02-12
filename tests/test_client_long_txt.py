@@ -34,17 +34,17 @@ class ClientStrQueueLongTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         host = "127.0.0.1"
-        port = random.randint(1500, 1600)
-        if 'sqhost' in os.environ:
-            host = os.environ['sqhost']
-        if 'sqport' in os.environ:
-            port = int(os.environ['sqport'])
         cls.host = host
-        cls.port = port
-        p = multiprocessing.Process(target=cls.start_server, args=(host, port))
-        p.start()
-        cls.server_process = p
-        time.sleep(0.1)
+        avai_port_found = False
+        while not avai_port_found:
+            port = random.randint(1500, 1600)
+            cls.port = port
+            p = multiprocessing.Process(target=cls.start_server, args=(host, port))
+            p.start()
+            cls.server_process = p
+            time.sleep(0.1)
+            avai_port_found = p.is_alive()
+
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)

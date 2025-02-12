@@ -16,6 +16,7 @@ from logging import handlers
 import argparse
 from queue import SimpleQueue
 from TPool import WildPool
+from .peekqueue import PeekQueue
 
 
 class SQServer:
@@ -54,7 +55,7 @@ class SQServer:
             ack_timeout (int): The time (in seconds) to wait before considering the acknowledgment as not received.
 
         """
-        self.q = SimpleQueue()
+        self.q = PeekQueue()
         self.action_len = action_len
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.ack_required = ack_required
@@ -152,6 +153,24 @@ class SQServer:
         b = b'%d' % self.q.qsize()
         conn.sendall(b)
 
+    def peek(self, conn, msg):
+        n = 0
+        sep = "\t"
+        if len(msg) < 2:
+            self.logger.error(f"SERVER> peek message should be at least 2, but got {msg}")
+        try:
+            msg = msg.decode()
+            n = int(msg[1:])
+            sep = msg[0]
+        except Exception as e:
+            pass
+        items = self.q.peek(n)
+        items = [item.decode() for item in items]
+        items_str = sep.join(items)
+        b = items_str.encode()
+        self.logger.debug(f"SERVER> peek: {b}")
+        conn.sendall(b)
+
     def listen(self):
         """
         Starts the server to listen for client connections continuously.
@@ -199,6 +218,8 @@ class SQServer:
                 close_conn = False
             elif action == b"cnt":
                 self.cnt(conn)
+            elif action == b"pek":
+                self.peek(conn, msg)
             else:
                 self.logger.debug("SERVER> other action: ")
                 self.logger.debug(action)

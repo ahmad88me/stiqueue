@@ -86,6 +86,10 @@ The following methods are supported by `stiqueue`:
 * `cnt() -> int`: Returns the number of messages currently in the queue. 
 * `ack()`: Acknowledges a message when `ack_required=True`. If not acknowledged within `ack_timeout`, 
 the server re-enqueues the message.
+* `peek(n: int = 0, sep: str = ",") -> bytes`: Retrieves up to `n` messages from the queue **without removing them**.
+  - If `n=0`, returns **all available messages**.
+  - Otherwise, returns up to `n` messages, separated by `sep`.
+  - If the queue is empty, returns an empty byte string (`b""`).
 
 > **Note**: When `ack_required=True` and the client process crashes after calling `deq`, messages are automatically 
 re-queued to ensure they are not lost.

@@ -142,6 +142,17 @@ class SQClient:
         """
         return self.send_with_action(b"", b"cnt", recv=True)
 
+    def peek(self, n=0, sep="\t"):
+        """
+        Sends a "count" request to the server and receives the count of messages in the queue.
+
+        Returns:
+            bytes: The count of messages in the queue.
+        """
+        if len(sep) != 1:
+            raise Exception("The separator is expected to be a single character")
+        return self.send_with_action(f"{sep}{n}".encode(), b"pek", recv=True)
+
     def disconnect(self):
         """
         Closes the connection to the server.

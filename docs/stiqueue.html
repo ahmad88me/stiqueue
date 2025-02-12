@@ -36,6 +36,9 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
+<section id="stiqueue-peekqueue-module">
+<h2>stiqueue.peekqueue module<a class="headerlink" href="#stiqueue-peekqueue-module" title="Permalink to this heading">¶</a></h2>
+</section>
 <section id="module-stiqueue.sqclient">
 <span id="stiqueue-sqclient-module"></span><h2>stiqueue.sqclient module<a class="headerlink" href="#module-stiqueue.sqclient" title="Permalink to this heading">¶</a></h2>
 <p>This module implements a simple client for interacting with a message queue server.</p>
@@ -172,6 +175,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.peek">
+<span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\t'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.peek"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a “count” request to the server and receives the count of messages in the queue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The count of messages in the queue.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="stiqueue.sqclient.SQClient.send_with_action">
 <span class="sig-name descname"><span class="pre">send_with_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/sqclient.html#SQClient.send_with_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.sqclient.SQClient.send_with_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sends a message with a specified action to the server.</p>
@@ -224,6 +241,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">stiqueue package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stiqueue-peekqueue-module">stiqueue.peekqueue module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-stiqueue.sqclient">stiqueue.sqclient module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stiqueue-sqserver-module">stiqueue.sqserver module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>

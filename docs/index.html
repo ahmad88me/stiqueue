@@ -107,6 +107,13 @@ of running threads.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">cnt()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code>: Returns the number of messages currently in the queue.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ack()</span></code>: Acknowledges a message when <code class="docutils literal notranslate"><span class="pre">ack_required=True</span></code>. If not acknowledged within <code class="docutils literal notranslate"><span class="pre">ack_timeout</span></code>,
 the server re-enqueues the message.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">peek(n:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">sep:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&quot;,&quot;)</span> <span class="pre">-&gt;</span> <span class="pre">bytes</span></code>: Retrieves up to <code class="docutils literal notranslate"><span class="pre">n</span></code> messages from the queue <strong>without removing them</strong>.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">n=0</span></code>, returns <strong>all available messages</strong>.</p></li>
+<li><p>Otherwise, returns up to <code class="docutils literal notranslate"><span class="pre">n</span></code> messages, separated by <code class="docutils literal notranslate"><span class="pre">sep</span></code>.</p></li>
+<li><p>If the queue is empty, returns an empty byte string (<code class="docutils literal notranslate"><span class="pre">b&quot;&quot;</span></code>).</p></li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <div><p><strong>Note</strong>: When <code class="docutils literal notranslate"><span class="pre">ack_required=True</span></code> and the client process crashes after calling <code class="docutils literal notranslate"><span class="pre">deq</span></code>, messages are automatically
@@ -172,6 +179,7 @@ Examples of extending StiQueue are available in the
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="stiqueue.html">stiqueue package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="stiqueue.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stiqueue.html#stiqueue-peekqueue-module">stiqueue.peekqueue module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stiqueue.html#module-stiqueue.sqclient">stiqueue.sqclient module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stiqueue.html#stiqueue-sqserver-module">stiqueue.sqserver module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stiqueue.html#module-contents">Module contents</a></li>

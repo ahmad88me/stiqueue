@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>stiqueue package &#8212; stiqueue 1.3.0 documentation</title>
+    <title>stiqueue package &#8212; stiqueue 1.3.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=6625fa76" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=3d533f9b"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=992bbb82"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -36,8 +36,71 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
-<section id="stiqueue-peekqueue-module">
-<h2>stiqueue.peekqueue module<a class="headerlink" href="#stiqueue-peekqueue-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-stiqueue.peekqueue">
+<span id="stiqueue-peekqueue-module"></span><h2>stiqueue.peekqueue module<a class="headerlink" href="#module-stiqueue.peekqueue" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stiqueue.peekqueue.PeekQueue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stiqueue.peekqueue.</span></span><span class="sig-name descname"><span class="pre">PeekQueue</span></span><a class="reference internal" href="_modules/stiqueue/peekqueue.html#PeekQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.peekqueue.PeekQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleQueue</span></code></p>
+<p>A thread-safe queue that extends <cite>SimpleQueue</cite> to allow peeking at elements
+without removing them.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This implementation has a <strong>side effect</strong>: peeking temporarily removes items
+and reinserts them, which may affect their order if multiple threads interact
+with the queue concurrently.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="stiqueue.peekqueue.PeekQueue.peek">
+<span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stiqueue/peekqueue.html#PeekQueue.peek"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#stiqueue.peekqueue.PeekQueue.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns up to <cite>n</cite> items from the queue without removing them.</p>
+<p>This method temporarily removes up to <cite>n</cite> items from the queue,
+stores them in a list, and then reinserts them in the same order
+to maintain queue integrity.</p>
+<dl class="simple">
+<dt><strong>Side Effects:</strong></dt><dd><ul class="simple">
+<li><p>Items are temporarily removed and reinserted, <strong>which may affect
+order if multiple threads interact with the queue at the same time</strong>.</p></li>
+<li><p>If the queue is accessed while <cite>peek()</cite> is running, items might be
+added <strong>after</strong> previously removed items, <strong>changing their order</strong>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of elements to peek. Defaults to 1.
+- If <cite>n=1</cite>, a single item is returned.
+- If <cite>n&gt;1</cite>, a list of items is returned.
+- If the queue is empty, <cite>None</cite> is returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>A single item if <cite>n=1</cite>.</p></li>
+<li><p>A list of items if <cite>n&gt;1</cite>.</p></li>
+<li><p><cite>None</cite> if the queue is empty.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[Any, List[Any], None]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span> <span class="o">=</span> <span class="n">PeekQueue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[10, 20]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[20]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-stiqueue.sqclient">
 <span id="stiqueue-sqclient-module"></span><h2>stiqueue.sqclient module<a class="headerlink" href="#module-stiqueue.sqclient" title="Permalink to this heading">¶</a></h2>
@@ -241,7 +304,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">stiqueue package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stiqueue-peekqueue-module">stiqueue.peekqueue module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-stiqueue.peekqueue">stiqueue.peekqueue module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-stiqueue.sqclient">stiqueue.sqclient module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stiqueue-sqserver-module">stiqueue.sqserver module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>

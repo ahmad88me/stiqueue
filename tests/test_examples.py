@@ -11,6 +11,7 @@ import random
 
 SLEEP = 0.25
 
+
 class ExampleTest(unittest.TestCase):
 
     @classmethod

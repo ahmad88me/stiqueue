@@ -16,13 +16,16 @@ Explore the full [StiQueue Documentation](https://ahmad88me.github.io/stiqueue/)
 ### SQServer
 `SQServer` is the core of StiQueue and manages the messaging queue. It can be run directly with minimal setup.
 
-#### Running the Server
+
+### Running the Server
 
 Once the code is downloaded, you can start the server with:
 
-```python src/stiqueue/sqserver.py --host 0.0.0.0 --port 1234 --debug```
+```sh
+PYTHONPATH=src python -m stiqueue.sqserver --host 0.0.0.0 --port 1234 --debug
+```
 
-The `--debug` flag is useful during the first run to monitor incoming and outgoing messages.
+💡 The `--debug` flag is useful during the first run to monitor incoming and outgoing messages.
 
 
 

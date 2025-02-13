@@ -3,8 +3,8 @@ import unittest
 import threading
 import logging
 import multiprocessing
-from stiqueue.sqserver import SQServer
-from stiqueue.sqclient import SQClient
+from stiqueue import SQServer
+from stiqueue import SQClient
 import os
 import time
 import random

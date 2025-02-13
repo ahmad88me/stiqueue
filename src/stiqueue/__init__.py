@@ -1,3 +1,5 @@
-from .sqclient import SQClient
-from .sqserver import SQServer
-from .peekqueue import PeekQueue
+from stiqueue.sqclient import SQClient
+from stiqueue.peekqueue import PeekQueue
+from stiqueue.sqserver import SQServer
+
+__all__ = ["SQClient", "SQServer", "PeekQueue"]

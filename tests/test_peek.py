@@ -2,7 +2,7 @@ import unittest
 from queue import Empty
 from threading import Thread
 from time import sleep
-from stiqueue.peekqueue import PeekQueue
+from stiqueue import PeekQueue
 
 
 class TestPeekQueue(unittest.TestCase):

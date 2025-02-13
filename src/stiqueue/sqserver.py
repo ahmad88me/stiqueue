@@ -16,7 +16,7 @@ from logging import handlers
 import argparse
 from queue import SimpleQueue
 from TPool import WildPool
-from .peekqueue import PeekQueue
+from stiqueue.peekqueue import PeekQueue
 
 
 class SQServer:

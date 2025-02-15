@@ -85,9 +85,7 @@ of running threads.
 The following methods are supported by `stiqueue`:
 * `enq(msg: bytes)`: Adds a message to the queue. 
 * `deq() -> bytes`: Retrieves the next message from the queue (blocking call). 
-* `cnt() -> int`: Returns the number of messages currently in the queue. 
-* `ack()`: Acknowledges a message when `ack_required=True`. If not acknowledged within `ack_timeout`, 
-the server re-enqueues the message.
+* `cnt() -> int`: Returns the number of messages currently in the queue.
 * `peek(n: int = 0, sep: str = ",") -> bytes`: Retrieves up to `n` messages from the queue **without removing them**.
   - If `n=0`, returns **all available messages**.
   - Otherwise, returns up to `n` messages, separated by `sep`.

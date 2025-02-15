@@ -17,6 +17,8 @@ import argparse
 from queue import SimpleQueue
 from TPool import WildPool
 from stiqueue.peekqueue import PeekQueue
+import datetime
+import time
 
 
 class SQServer:
@@ -39,7 +41,7 @@ class SQServer:
     """
 
     def __init__(self, host="127.0.0.1", port=1234, backlog=None, action_len=3, logger=None, buff_size=None,
-                 max_workers=5, ack_required=False, ack_timeout=3):
+                 max_workers=5, ack_required=True, ack_timeout=3):
         """
         Initializes the SQServer with the specified parameters.
 
@@ -60,7 +62,7 @@ class SQServer:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.ack_required = ack_required
         self.ack_timeout = 3
-        if isinstance(ack_timeout, int) and ack_timeout > 0:
+        if isinstance(ack_timeout, (int, float)) and ack_timeout > 0:
             self.ack_timeout = ack_timeout
         if buff_size:
             self.buff_size = buff_size
@@ -132,7 +134,7 @@ class SQServer:
                 if acknowledged == b"ack":
                     self.logger.debug("SERVER> acknowledged")
                 else:
-                    self.logger.debug(f"SERVER> not acknowledged <{str(acknowledged)}>")
+                    self.logger.warn(f"SERVER> not acknowledged <{str(acknowledged)}>")
                     raise Exception("Not Acknowledged")
         except Exception as e:
             self.logger.error(f"SERVER> exception in blocking deq: {e}")

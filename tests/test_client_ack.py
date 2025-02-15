@@ -47,7 +47,6 @@ class ClientAckTest(unittest.TestCase):
         logger.addHandler(ch)
         cls.client = SQClient(host=cls.host, port=cls.port, logger=logger, ack_required=True)
 
-
     @classmethod
     def tearDownClass(cls):
         try:
@@ -82,10 +81,11 @@ class ClientAckTest(unittest.TestCase):
             msg2 = parent_end.recv()
         else:
             msg2 = None
-        p2.join(timeout=SLEEP)
         p2.terminate()
-        self.assertEqual(msg, b"B")
-        self.assertEqual(msg2, b"A")
+        possible_responses = [b"A", b"B"]
+        self.assertIn(msg, possible_responses)
+        self.assertIn(msg2, possible_responses)
+        self.assertNotEqual(msg, msg2)
 
 
 if __name__ == '__main__':

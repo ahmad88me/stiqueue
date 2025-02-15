@@ -36,7 +36,7 @@ class ClientTest(unittest.TestCase):
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)
-        cls.client = SQClient(host=cls.host, port=cls.port, logger=logger)
+        cls.client = SQClient(host=cls.host, port=cls.port, logger=logger, ack_required=True)
 
     @classmethod
     def tearDownClass(cls):
@@ -48,7 +48,7 @@ class ClientTest(unittest.TestCase):
         logger = logging.getLogger(__name__)
         ch = logging.NullHandler()
         logger.addHandler(ch)
-        s = SQServer(host=host, port=port, logger=logger)
+        s = SQServer(host=host, port=port, logger=logger, ack_required=True, ack_timeout=SLEEP)
         s.listen()
 
     def test_peek(self):
@@ -61,12 +61,10 @@ class ClientTest(unittest.TestCase):
         b = self.client.deq()
         self.assertEqual(a, b"AA")
         self.assertEqual(b, b"B")
-
         self.client.enq(b"CC")
         items = self.client.peek(n=2, sep=",")
         self.assertEqual(items, b"CC")
         self.assertEqual(self.client.deq(), b"CC")
-
         items = self.client.peek(sep=";")
         self.assertEqual(items, b"")
 

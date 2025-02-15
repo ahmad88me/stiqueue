@@ -64,14 +64,18 @@ class SQClient:
             self.buff_size = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
         self.socket.connect((self.host, self.port))
 
-    def send_with_action(self, msg, action, recv=False):
+    def send_with_action(self, msg, action, recv=False, ack=False):
         """
-        Sends a message with a specified action to the server.
+        Sends a message with a specified action to the server, with optional acknowledgment.
+
+        This method connects to the server, sends a message prefixed with the specified action,
+        and optionally waits for a response or sends an acknowledgment.
 
         Args:
             msg (bytes or str): The message to send. If not in bytes, it will be encoded.
             action (bytes): The action command (e.g., "enq", "deq", "cnt").
             recv (bool): Whether to expect a response from the server. Defaults to False.
+            ack (bool, optional): Whether to send an acknowledgment after sending the message. Defaults to `False`.
 
         Returns:
             bytes: The server's response if recv is True, otherwise None.
@@ -101,7 +105,8 @@ class SQClient:
                 elif len(ret_val) < self.buff_size:
                     self.logger.debug(f"DEBUGGING: ret val is smaller than buff size")
                     break
-
+        if ack and self.ack_required:
+            self.socket.sendall(b"ack")
         self.disconnect()
         return total_ret_val
 
@@ -121,17 +126,8 @@ class SQClient:
         Returns:
             bytes: The dequeued message from the server.
         """
-        msg = self.send_with_action(b"", b"deq", recv=True)
-        if self.ack_required:
-            self.ack()
+        msg = self.send_with_action(b"", b"deq", recv=True, ack=True)
         return msg
-
-    def ack(self):
-        """
-        Sends an acknowledgement request to the server.
-
-        """
-        self.send_with_action(b"", b"ack")
 
     def cnt(self):
         """

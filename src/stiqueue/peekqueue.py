@@ -1,57 +1,43 @@
-from queue import SimpleQueue
-from threading import Lock
+import queue
+import copy
 
 
-class PeekQueue(SimpleQueue):
+class PeekQueue(queue.Queue):
     """
-    A thread-safe queue that extends `SimpleQueue` to allow peeking at elements
+    A thread-safe queue that extends `Queue` to allow peeking at elements
     without removing them.
 
     .. warning::
-        This implementation has a **side effect**: peeking temporarily removes items
-        and reinserts them, which may affect their order if multiple threads interact
-        with the queue concurrently.
+        This implementation provides a non-intrusive `peek` method, but
+        **it still creates a deep copy of the internal queue**. This operation
+        may be expensive for large queues.
     """
-
-    def __init__(self):
-        """
-        Initializes the PeekQueue instance.
-
-        Inherits from `queue.SimpleQueue` and adds a lock for thread safety.
-        """
-        super().__init__()
-        self.lock = Lock()
 
     def peek(self, n=0):
         """
-        Returns up to `n` items from the queue without removing them.
+        Returns up to `n` items from the queue **without removing them**.
 
-        This method temporarily removes up to `n` items from the queue,
-        stores them in a list, and then reinserts them in the same order
-        to maintain queue integrity.
+        Unlike previous implementations, this method **creates a deep copy** of
+        the queue's internal `deque`, ensuring that the original queue remains
+        unmodified.
 
-        **Side Effects:**
-            - Items are temporarily removed and reinserted, **which may affect
-              order if multiple threads interact with the queue at the same time**.
-            - If the queue is accessed while `peek()` is running, items might be
-              added **after** previously removed items, **changing their order**.
+        .. note::
+            - This method **does not** affect the order of items in the queue.
+            - If `n=0`, it returns **all** available elements.
+            - If `n > queue size`, it returns all elements.
 
         Args:
-            n (int, optional): The number of elements to peek. Defaults to 1.
-                - If `n=1`, a single item is returned.
-                - If `n>1`, a list of items is returned.
-                - If the queue is empty, `None` is returned.
+            n (int, optional): The number of elements to peek. Defaults to `0` (all items).
 
         Returns:
-            Union[Any, List[Any], None]:
-                - A single item if `n=1`.
-                - A list of items if `n>1`.
-                - `None` if the queue is empty.
+            List[Any]: A list containing up to `n` items from the queue.
 
         Example:
             >>> pq = PeekQueue()
             >>> pq.put(10)
             >>> pq.put(20)
+            >>> pq.peek(1)
+            [10]
             >>> pq.peek()
             [10, 20]
             >>> pq.get()
@@ -59,17 +45,13 @@ class PeekQueue(SimpleQueue):
             >>> pq.peek()
             [20]
         """
+        copied_queue = copy.deepcopy(self.queue)
+        qsize = len(copied_queue)
+        if n < 1:
+            n = qsize
+        else:
+            n = min(n, qsize)
         items = []
-        with self.lock:
-            try:
-                if n < 1:
-                    n = self.qsize()
-                for i in range(n):
-                    if self.empty():
-                        break
-                    items.append(self.get())
-                for item in items:
-                    self.put(item)
-            except Exception as e:
-                pass
+        for _ in range(n):
+            items.append(copied_queue.popleft())
         return items
